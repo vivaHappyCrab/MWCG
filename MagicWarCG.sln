@@ -5,7 +5,13 @@ VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MagicWarCG", "MagicWarCG\MagicWarCG.csproj", "{A1529A0D-6F38-4926-B7D1-F4F400F496FC}"
 EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "MWCGClasses", "MWCGClasses\MWCGClasses.shproj", "{7029A219-32D1-4DD7-BFBA-8941D9DC726E}"
+EndProject
 Global
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		MWCGClasses\MWCGClasses.projitems*{7029a219-32d1-4dd7-bfba-8941d9dc726e}*SharedItemsImports = 13
+		MWCGClasses\MWCGClasses.projitems*{a1529a0d-6f38-4926-b7d1-f4f400f496fc}*SharedItemsImports = 4
+	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU

@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>7029a219-32d1-4dd7-bfba-8941d9dc726e</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>MWCGClasses</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)Card.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)GameAction.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)GameObjects\Artifact.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)GameObjects\Barrack.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)GameObjects\GameObject.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)GameObjects\Hero.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)GameObjects\Unit.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)InGame\BattleField.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)InGame\Game.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)InGame\Graveyard.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)InGame\Library.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)InGame\Player.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Race.cs" />
+  </ItemGroup>
+</Project>
