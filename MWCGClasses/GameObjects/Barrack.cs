@@ -4,7 +4,10 @@ using System.Text;
 
 namespace MWCGClasses.GameObjects
 {
-    public class Barrack:GameObject
+    public class Barrack : GameObject
     {
+        public Barrack(Card back) : base(back)
+        {
+        }
     }
 }

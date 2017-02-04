@@ -12,6 +12,10 @@ namespace MWCGClasses.GameObjects
     };
     public class Artifact:GameObject
     {
+        public Artifact(Card back) : base(back)
+        {
+        }
+
         public ArtType Type { get; set; }
     }
 }
