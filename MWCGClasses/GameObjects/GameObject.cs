@@ -15,6 +15,20 @@ namespace MWCGClasses.GameObjects
 
         public Player Owner { get; set; }
 
+        public Action onSummon { get; set; }
+
+        public Action onEnter { get; set; }
+
+        public Action onDeath { get; set; }
+
+        public Action onRemove { get; set; }
+
+        public Action onTakeDamage { get; set; }
+
+        public Action onAbilityCastStart { get; set; }
+        
+        public Action onAbilityCastCompleted { get; set; } 
+
         public GameObject(Card back)
         {
             BackCard = back;

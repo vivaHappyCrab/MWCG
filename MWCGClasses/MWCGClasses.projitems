@@ -11,8 +11,10 @@
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)Card.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)GameAction.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)GameObjects\Ability.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)GameObjects\Artifact.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)GameObjects\Barrack.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)GameObjects\Spell.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)GameObjects\Support.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)GameObjects\GameObject.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)GameObjects\Hero.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)GameObjects\Unit.cs" />

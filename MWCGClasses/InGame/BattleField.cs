@@ -11,6 +11,6 @@ namespace MWCGClasses.InGame
 
         public List<Unit> Units { get; set; }
 
-        public List<Barrack> Support { get; set; }
+        public List<Support> Supports { get; set; }
     }
 }

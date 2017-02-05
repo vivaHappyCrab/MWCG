@@ -29,14 +29,16 @@ namespace MWCGClasses
 
         public CardType Type { get; set; }
 
-        public GameObject Entity { get; set; }
+        public int EntityId { get; set; }
 
         public string Description { get; set; }
-        
+
+        public string Name { get; set; }
+
         public bool Collectable { get; set; }
 
         public RareType Rarity { get; set; }
 
-        public int CardNumber { get; set; }
+        public int CardId { get; set; }
     }
 }

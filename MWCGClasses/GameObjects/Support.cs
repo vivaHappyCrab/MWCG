@@ -4,9 +4,9 @@ using System.Text;
 
 namespace MWCGClasses.GameObjects
 {
-    public class Barrack : GameObject
+    public class Support : GameObject
     {
-        public Barrack(Card back,int hp) : base(back)
+        public Support(Card back,int hp) : base(back)
         {
             Health = hp;
         }
