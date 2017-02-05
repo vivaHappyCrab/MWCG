@@ -6,8 +6,12 @@ namespace MWCGClasses.GameObjects
 {
     public class Hero : GameObject
     {
-        public Hero(Card back) : base(back)
+        public Hero(Card back,int hp, Artifact ability) : base(back)
         {
+            Health = hp;
+            Default = ability;
+            Arts = new Artifact[3];
+            Arts[2] = ability;
         }
 
         public Artifact[] Arts {get;set;}

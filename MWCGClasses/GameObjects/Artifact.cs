@@ -12,8 +12,10 @@ namespace MWCGClasses.GameObjects
     };
     public class Artifact:GameObject
     {
-        public Artifact(Card back) : base(back)
+        public Artifact(Card back, ArtType type=ArtType.Right, int charges=-1) : base(back)
         {
+            Health = charges;
+            Type = type;
         }
 
         public ArtType Type { get; set; }

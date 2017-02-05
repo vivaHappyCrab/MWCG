@@ -6,8 +6,9 @@ namespace MWCGClasses.GameObjects
 {
     public class Barrack : GameObject
     {
-        public Barrack(Card back) : base(back)
+        public Barrack(Card back,int hp) : base(back)
         {
+            Health = hp;
         }
     }
 }
