@@ -34,7 +34,7 @@ namespace MWData
                 card.Name=(string)res["Name"];
                 card.Rarity=(RareType)res["Rarity"];
                 card.Type=(CardType)res["Type"];
-                cn.Close();
+                cn.Dispose();
             }
             return card;
         }
@@ -59,7 +59,7 @@ namespace MWData
                     card.Type = (CardType)res["Type"];
                     result.Add(card);
                 }
-                cn.Close();
+                cn.Dispose();
             }
             return result;
         }
