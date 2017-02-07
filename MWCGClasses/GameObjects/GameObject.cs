@@ -7,7 +7,7 @@ namespace MWCGClasses.GameObjects
 {
     public class GameObject
     {
-        public Card BackCard { get; set; }
+        public int BackCard { get; set; }
 
         public int ObjectNum { get; set; }
         

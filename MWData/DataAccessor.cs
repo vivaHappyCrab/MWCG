@@ -56,7 +56,7 @@ namespace MWData
                     card.ManaCost = (int)res["ManaCost"];
                     card.Name = (string)res["Name"];
                     card.Rarity = (RareType)res["Rarity"];
-                    card.Type = (CardType)res["Type"];
+                    card.Type = (CardType)res["Ty pe"];
                     result.Add(card);
                 }
                 cn.Dispose();

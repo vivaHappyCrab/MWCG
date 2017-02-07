@@ -26,6 +26,7 @@ namespace MagicWarCG
             footman.Health = 1;
             footman.ObjectNum = 1;
             footman.Owner = p;
+            footman.BackCard = 1;
             Factory.InitLibs();
             Card c = Factory.getCardById(1);
         }

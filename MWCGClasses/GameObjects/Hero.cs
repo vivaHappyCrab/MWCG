@@ -20,8 +20,6 @@ namespace MWCGClasses.GameObjects
 
         public Artifact Default { get; set; }
 
-        public bool First { get; set; }
-
         public int Attack { get; set; }
 
         public bool CanAttack { get; set; }

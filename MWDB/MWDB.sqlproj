@@ -65,6 +65,7 @@
     <Build Include="getCard.sql" />
     <Build Include="Races.sql" />
     <Build Include="CardsRace.sql" />
+    <Build Include="GameObject.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="MWDB.publish.xml" />
