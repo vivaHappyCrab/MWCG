@@ -63,5 +63,29 @@ namespace MWData
             }
             return result;
         }
+        static public List<Object> getObjectList()
+        {
+            List<Object> result = new List<Object>();
+            using (SqlConnection cn = new SqlConnection(connector))
+            {
+                cn.Open();
+                SqlCommand cmd = new SqlCommand("dbo.getCard", cn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                SqlDataReader res = cmd.ExecuteReader();
+                while (res.Read())
+                {
+                    Object o;
+                    switch ((ObjectType)(res["OType"]))
+                    {
+                        case ObjectType.creature: {
+                                o = new Unit();
+                                break;
+                            }
+                    }
+                }
+                cn.Dispose();
+            }
+            return result;
+        }
     }
 }

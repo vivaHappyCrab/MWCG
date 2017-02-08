@@ -25,6 +25,7 @@ namespace MWData
         static public void InitLibs()
         {
             CardLibrary = DataAccessor.getCardList();
+            GameObject = DataAccessor.getObjectList();
         }
     }
 }

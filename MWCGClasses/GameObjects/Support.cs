@@ -6,7 +6,7 @@ namespace MWCGClasses.GameObjects
 {
     public class Support : GameObject
     {
-        public Support(Card back,int hp) : base(back)
+        public Support(int cardback,int id, int hp) : base(cardback,id,ObjectType.support)
         {
             Health = hp;
         }

@@ -5,6 +5,15 @@ using MWCGClasses.InGame;
 
 namespace MWCGClasses.GameObjects
 {
+    public enum ObjectType
+    {
+        creature=0,
+        support=1,
+        hero=2,
+        spell =3,
+        ability=4,
+        artifact=5
+    }
     public class GameObject
     {
         public int BackCard { get; set; }
@@ -14,6 +23,8 @@ namespace MWCGClasses.GameObjects
         public int Health { get; set; }
 
         public Player Owner { get; set; }
+
+        public ObjectType OType { get; set; }
 
         public Action onSummon { get; set; }
 
@@ -29,10 +40,12 @@ namespace MWCGClasses.GameObjects
         
         public Action onAbilityCastCompleted { get; set; } 
 
-        public GameObject(Card back)
+        public GameObject(int cardback,int id,ObjectType otype)
         {
-            BackCard = back;
+            BackCard = cardback;
             Health = -1;
+            ObjectNum = id;
+            OType = otype;
         }
     }
 }
