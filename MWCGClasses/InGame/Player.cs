@@ -16,5 +16,7 @@ namespace MWCGClasses.InGame
         public List<Card> Hand { get; set; }
 
         public bool First { get; set; }
+
+
     }
 }

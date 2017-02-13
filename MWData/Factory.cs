@@ -17,6 +17,12 @@ namespace MWData
         {
             return ObjectsLibrary.Where(x => x.ObjectNum == id).First();
         }
+
+        internal static Action getActionById(int effect)
+        {
+            throw new NotImplementedException();
+        }
+
         static public Card getCardById(int id)
         {
             return CardLibrary.Where(x => x.CardId == id).First();
@@ -25,7 +31,7 @@ namespace MWData
         static public void InitLibs()
         {
             CardLibrary = DataAccessor.getCardList();
-            GameObject = DataAccessor.getObjectList();
+            ObjectsLibrary = DataAccessor.getObjectList();
         }
     }
 }

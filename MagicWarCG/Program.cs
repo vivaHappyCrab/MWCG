@@ -14,6 +14,7 @@ namespace MagicWarCG
     {
         static void Main(string[] args)
         {
+            Factory.InitLibs();
             Player p = new Player();
             Card foot=new Card();
             foot.ManaCost = 1;
@@ -21,13 +22,7 @@ namespace MagicWarCG
             foot.Races[0] = 1;
             foot.Rarity = RareType.Common;
             foot.Type = CardType.Permanent;
-            Unit footman = new Unit(foot);
-            footman.Attack = 1;
-            footman.Health = 1;
-            footman.ObjectNum = 1;
-            footman.Owner = p;
-            footman.BackCard = 1;
-            Factory.InitLibs();
+            Unit footman = Factory.getObjectById(1)as Unit;
             Card c = Factory.getCardById(1);
         }
     }

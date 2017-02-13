@@ -56,36 +56,112 @@ namespace MWData
                     card.ManaCost = (int)res["ManaCost"];
                     card.Name = (string)res["Name"];
                     card.Rarity = (RareType)res["Rarity"];
-                    card.Type = (CardType)res["Ty pe"];
+                    card.Type = (CardType)res["Type"];
                     result.Add(card);
                 }
                 cn.Dispose();
             }
             return result;
         }
-        static public List<Object> getObjectList()
+        static public List<GameObject> getObjectList()
         {
-            List<Object> result = new List<Object>();
+            List<GameObject> result = new List<GameObject>();
             using (SqlConnection cn = new SqlConnection(connector))
             {
                 cn.Open();
-                SqlCommand cmd = new SqlCommand("dbo.getCard", cn);
+                SqlCommand cmd = new SqlCommand("dbo.getGameObject", cn);
                 cmd.CommandType = CommandType.StoredProcedure;
                 SqlDataReader res = cmd.ExecuteReader();
                 while (res.Read())
                 {
-                    Object o;
+                    GameObject o;
                     switch ((ObjectType)(res["OType"]))
                     {
                         case ObjectType.creature: {
-                                o = new Unit();
+                                o = new Unit((int)(res["BackCard"]), (int)(res["ObjectNum"]), res["Name"].ToString(), res["Description"].ToString(), (int)(res["Attack"]), (int)(res["Health"])); 
                                 break;
                             }
+                        case ObjectType.support:
+                            {
+                                o = new Support((int)(res["BackCard"]), (int)(res["ObjectNum"]), res["Name"].ToString(), res["Description"].ToString(), (int)(res["Health"]));
+                                break;
+                            }
+                        case ObjectType.hero:
+                            {
+                                o = new Hero((int)(res["BackCard"]), (int)(res["ObjectNum"]), res["Name"].ToString(), res["Description"].ToString(), (int)(res["Health"]), (int)(res["Default"]));
+                                break;
+                            }
+                        case ObjectType.spell:
+                            {
+                                o = new Spell((int)(res["BackCard"]), (int)(res["ObjectNum"]), (int)(res["Default"]), res["Name"].ToString(), res["Description"].ToString());
+                                break;
+                            }
+                        case ObjectType.artifact:
+                            {
+                                o = new Artifact((int)(res["BackCard"]), (int)(res["ObjectNum"]), res["Name"].ToString(), res["Description"].ToString(), (ArtType)(res["Default"]), (int)(res["Health"]));
+                                break;
+                            }
+                        case ObjectType.ability:
+                            {
+                                o = new Ability((int)(res["BackCard"]), (int)(res["ObjectNum"]), (int)(res["Default"]), (int)(res["Cost"]), (bool)(res["Attack"]), res["Name"].ToString(), res["Description"].ToString());
+                                break;
+                            }
+                        default: { o = null;break; }
                     }
+                    result.Add(o);
                 }
                 cn.Dispose();
             }
             return result;
+        }
+        static public GameObject getObject(int id)
+        {
+            GameObject o;
+            using (SqlConnection cn = new SqlConnection(connector))
+            {
+                cn.Open();
+                SqlCommand cmd = new SqlCommand("dbo.getGameObject", cn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.Add(new SqlParameter("id", id));
+                SqlDataReader res = cmd.ExecuteReader();
+                res.Read();
+                    switch ((ObjectType)(res["OType"]))
+                    {
+                        case ObjectType.creature:
+                            {
+                                o = new Unit((int)(res["BackCard"]), (int)(res["ObjectNum"]), res["Name"].ToString(), res["Description"].ToString(), (int)(res["Attack"]), (int)(res["Health"]));
+                                break;
+                            }
+                        case ObjectType.support:
+                            {
+                                o = new Support((int)(res["BackCard"]), (int)(res["ObjectNum"]), res["Name"].ToString(), res["Description"].ToString(), (int)(res["Health"]));
+                                break;
+                            }
+                        case ObjectType.hero:
+                            {
+                                o = new Hero((int)(res["BackCard"]), (int)(res["ObjectNum"]), res["Name"].ToString(), res["Description"].ToString(), (int)(res["Health"]), (int)(res["Default"]));
+                                break;
+                            }
+                        case ObjectType.spell:
+                            {
+                                o = new Spell((int)(res["BackCard"]), (int)(res["ObjectNum"]), (int)(res["Default"]), res["Name"].ToString(), res["Description"].ToString());
+                                break;
+                            }
+                        case ObjectType.artifact:
+                            {
+                                o = new Artifact((int)(res["BackCard"]), (int)(res["ObjectNum"]), res["Name"].ToString(), res["Description"].ToString(), (ArtType)(res["Default"]), (int)(res["Health"]));
+                                break;
+                            }
+                        case ObjectType.ability:
+                            {
+                                o = new Ability((int)(res["BackCard"]), (int)(res["ObjectNum"]), (int)(res["Default"]), (int)(res["Cost"]), (bool)(res["Attack"]), res["Name"].ToString(), res["Description"].ToString());
+                                break;
+                            }
+                        default: { o = null; break; }
+                    }
+                cn.Dispose();
+            }
+            return o;
         }
     }
 }

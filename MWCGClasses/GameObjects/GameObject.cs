@@ -26,6 +26,10 @@ namespace MWCGClasses.GameObjects
 
         public ObjectType OType { get; set; }
 
+        public string Name { get; set; }
+
+        public string Description { get; set; }
+
         public Action onSummon { get; set; }
 
         public Action onEnter { get; set; }
@@ -40,12 +44,14 @@ namespace MWCGClasses.GameObjects
         
         public Action onAbilityCastCompleted { get; set; } 
 
-        public GameObject(int cardback,int id,ObjectType otype)
+        public GameObject(int cardback,int id,ObjectType otype,string name, string desc)
         {
             BackCard = cardback;
             Health = -1;
             ObjectNum = id;
             OType = otype;
+            Name = name;
+            Description = desc;
         }
     }
 }
