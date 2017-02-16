@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using MWCGClasses.GameObjects;
+using MWData;
 
 namespace MWCGClasses.InGame
 {
@@ -12,5 +13,12 @@ namespace MWCGClasses.InGame
         public List<Unit> Units { get; set; }
 
         public List<Support> Supports { get; set; }
+
+        public BattleField(int heroid)
+        {
+            Face = Factory.GetHeroByRace(heroid);
+            Units = new List<Unit>();
+            Supports = new List<Support>();
+        }
     }
 }

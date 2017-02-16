@@ -26,23 +26,28 @@ namespace MWCGClasses.GameObjects
 
         public ObjectType OType { get; set; }
 
+        internal GameObject getCopy()
+        {
+            return MemberwiseClone()as GameObject;
+        }
+
         public string Name { get; set; }
 
         public string Description { get; set; }
 
-        public Action onSummon { get; set; }
+        public Event onSummon { get; set; }
 
-        public Action onEnter { get; set; }
+        public Event onEnter { get; set; }
 
-        public Action onDeath { get; set; }
+        public Event onDeath { get; set; }
 
-        public Action onRemove { get; set; }
+        public Event onRemove { get; set; }
 
-        public Action onTakeDamage { get; set; }
+        public Event onTakeDamage { get; set; }
 
-        public Action onAbilityCastStart { get; set; }
+        public Event onAbilityCastStart { get; set; }
         
-        public Action onAbilityCastCompleted { get; set; } 
+        public Event onAbilityCastCompleted { get; set; } 
 
         public GameObject(int cardback,int id,ObjectType otype,string name, string desc)
         {

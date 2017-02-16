@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using MWCGClasses.GameObjects;
+using MWData;
 
 namespace MWCGClasses.InGame
 {
@@ -17,6 +18,16 @@ namespace MWCGClasses.InGame
 
         public bool First { get; set; }
 
+        public int Num { get; set; }
 
+        public Player(int race,Library deck,bool first,int num)
+        {
+            Race = race;
+            Deck = deck;
+            First = first;
+            Num = num;
+            Field = new BattleField(race);
+            Hand = new List<Card>();
+        }
     }
 }

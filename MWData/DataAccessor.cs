@@ -47,7 +47,8 @@ namespace MWData
                 SqlCommand cmd = new SqlCommand("dbo.getCard", cn);
                 cmd.CommandType = CommandType.StoredProcedure;
                 SqlDataReader res = cmd.ExecuteReader();
-                while (res.Read()){
+                while (res.Read())
+                {
                     Card card = new Card();
                     card.CardId = (int)res["CardId"];
                     card.Collectable = (bool)res["Collectable"];
@@ -162,6 +163,44 @@ namespace MWData
                 cn.Dispose();
             }
             return o;
+        }
+        public static Race getRace(int id)
+        {
+            Race race = new Race();
+            using (SqlConnection cn = new SqlConnection(connector))
+            {
+                cn.Open();
+                SqlCommand cmd = new SqlCommand("dbo.getRace", cn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.Add(new SqlParameter("id", id));
+                SqlDataReader res = cmd.ExecuteReader();
+                res.Read();
+                race.RaceId = (int)(res["RaceId"]);
+                race.Name = res["Name"].ToString();
+                race.HeroId = (int)(res["HeroId"]);
+            }
+            return race;
+        }
+        public static List<Race> getRaceList()
+        {
+            List<Race> result = new List<Race>();
+            using (SqlConnection cn = new SqlConnection(connector))
+            {
+                cn.Open();
+                SqlCommand cmd = new SqlCommand("dbo.getRace", cn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                SqlDataReader res = cmd.ExecuteReader();
+                while (res.Read())
+                {
+                    Race race = new Race();
+                    race.RaceId = (int)(res["RaceId"]);
+                    race.Name = res["Name"].ToString();
+                    race.HeroId = (int)(res["HeroId"]);
+                    result.Add(race);
+                }
+                cn.Dispose();
+            }
+            return result;
         }
     }
 }

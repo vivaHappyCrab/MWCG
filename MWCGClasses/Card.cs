@@ -40,5 +40,14 @@ namespace MWCGClasses
         public RareType Rarity { get; set; }
 
         public int CardId { get; set; }
+
+        internal Card getCopy()
+        {
+            return MemberwiseClone() as Card;
+        }
+
+        public int Owner { get; set; }
+
+        public int Id { get; set; }
     }
 }
