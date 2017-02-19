@@ -1,4 +1,5 @@
-﻿using MWData;
+﻿using MWCGClasses.InGame;
+using MWData;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -12,7 +13,7 @@ namespace MWCGClasses.GameObjects
             Health = hp;
             Default = ability;
             Arts = new Artifact[3];
-            Arts[2] = Factory.getObjectById(ability)as Artifact;
+            //Arts[2] = Factory.getObjectById(ability)as Artifact; TODO IN GAME INIT
             Attack = 0;
             CanAttack = false;
         }

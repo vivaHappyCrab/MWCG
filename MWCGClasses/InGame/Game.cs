@@ -18,8 +18,8 @@ namespace MWCGClasses.InGame
         public Game(int race1,int race2, Library lib1, Library lib2, Factory f)
         {
             Players = new List<Player>();
-            Players.Add(new Player(race1,lib1,true,0));
-            Players.Add(new Player(race2,lib2,false,1));
+            Players.Add(new Player(race1,lib1,true,0,this));
+            Players.Add(new Player(race2,lib2,false,1,this));
             Factory = f;
         }
 

@@ -14,9 +14,9 @@ namespace MWCGClasses.InGame
 
         public List<Support> Supports { get; set; }
 
-        public BattleField(int heroid)
+        public BattleField(int heroid,Game g)
         {
-            Face = Factory.GetHeroByRace(heroid);
+            Face = g.Factory.GetHeroByRace(heroid);
             Units = new List<Unit>();
             Supports = new List<Support>();
         }

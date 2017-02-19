@@ -22,13 +22,13 @@ namespace MWCGClasses.InGame
 
         public int Num { get; set; }
 
-        public Player(int race,Library deck,bool first,int num)
+        public Player(int race,Library deck,bool first,int num,Game g)
         {
             Race = race;
             Deck = deck;
             First = first;
             Num = num;
-            Field = new BattleField(race);
+            Field = new BattleField(race,g);
             Hand = new List<Card>();
             Graves = new Graveyard();
         }

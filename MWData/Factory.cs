@@ -32,7 +32,7 @@ namespace MWData
             return h;
         }
 
-        Event getEventById(int effect)
+        public Event getEventById(int effect)
         {
             throw new NotImplementedException();
         }
