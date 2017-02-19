@@ -2,29 +2,30 @@
 using System.Collections.Generic;
 using System.Text;
 using MWCGClasses.GameObjects;
+using MWData;
+using MWCGClasses.ClientInterface;
 
 namespace MWCGClasses.InGame
 {
     public class Game
     {
-        public Player[] Players { get; set; }
+        public List<Player> Players { get; set; }
 
-        public Game(int race1,int race2, Library lib1, Library lib2)
+        public Factory Factory { get; set; }
+
+        public List<Client> Clients { get; set; }
+
+        public Game(int race1,int race2, Library lib1, Library lib2, Factory f)
         {
-            Players = new Player[2];
-            Players[0] = new Player(race1,lib1,true,0);
-            Players[1] = new Player(race2,lib2,false,1);
+            Players = new List<Player>();
+            Players.Add(new Player(race1,lib1,true,0));
+            Players.Add(new Player(race2,lib2,false,1));
+            Factory = f;
         }
 
         public void AddToBattleField(GameObject perm, int owner)
         {
-            foreach (Player p in Players)
-            {
-                foreach (GameObject obj in p.Field.Units)
-                    obj.onEnter(this, perm);
-                foreach (GameObject obj in p.Field.Supports)
-                    obj.onEnter(this, perm);
-            }
+            GameAction.onObjectEnter(this, perm);
             switch (perm.OType) {
                 case ObjectType.creature:
                     {
@@ -38,6 +39,23 @@ namespace MWCGClasses.InGame
                     }
                  
             }      
+        }
+
+        public GameObject ObjectById(int targetId)
+        {
+            foreach(Player p in Players)
+            {
+                foreach (Unit u in p.Field.Units)
+                    if (u.Id == targetId) return u;
+                foreach (Support s in p.Field.Supports)
+                    if (s.Id == targetId) return s;
+                if (p.Field.Face.Id == targetId) return p.Field.Face;
+                foreach (Artifact a in p.Field.Face.Arts)
+                    if (a.Id == targetId) return a;
+                foreach (GameObject o in p.Graves.Graves)
+                    if (o.Id == targetId) return o;
+            }
+            return null;
         }
     }
 }

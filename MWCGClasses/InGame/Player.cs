@@ -16,6 +16,8 @@ namespace MWCGClasses.InGame
 
         public List<Card> Hand { get; set; }
 
+        public Graveyard Graves { get; set; }
+
         public bool First { get; set; }
 
         public int Num { get; set; }
@@ -28,6 +30,7 @@ namespace MWCGClasses.InGame
             Num = num;
             Field = new BattleField(race);
             Hand = new List<Card>();
+            Graves = new Graveyard();
         }
     }
 }

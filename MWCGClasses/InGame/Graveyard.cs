@@ -7,7 +7,13 @@ namespace MWCGClasses.InGame
 {
     public class Graveyard
     {
-        public List<GameObject> graves { get; set; }
-        public List<GameObject> exiles { get; set; }
+        public List<GameObject> Graves { get; set; }
+        public List<GameObject> Exiles { get; set; }
+
+        public Graveyard()
+        {
+            Graves = new List<GameObject>();
+            Exiles = new List<GameObject>();
+        }
     }
 }

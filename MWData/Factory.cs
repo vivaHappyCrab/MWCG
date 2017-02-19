@@ -11,32 +11,40 @@ namespace MWData
 {
     public class Factory
     {
-        static List<Card> CardLibrary = new List<Card>();
-        static List<GameObject> ObjectsLibrary = new List<GameObject>();
-        static List<Race> RaceLibrary = new List<Race>();
-        static public GameObject getObjectById(int id)
+         List<Card> CardLibrary = new List<Card>();
+         List<GameObject> ObjectsLibrary = new List<GameObject>();
+         List<Race> RaceLibrary = new List<Race>();
+         int ObjId = 1;
+         int CardId = 1;
+         public GameObject getObjectById(int id)
         {
             if (id <= 0) return null;
-            return ObjectsLibrary.Where(x => x.ObjectNum == id).First().getCopy();
+            GameObject o=ObjectsLibrary.Where(x => x.ObjectNum == id).First().getCopy();
+            o.Id = ObjId++;
+            return o;
         }
 
-        internal static Hero GetHeroByRace(int id)
+        public Hero GetHeroByRace(int id)
         {
-            return getObjectById(
+            Hero h=getObjectById(
                 RaceLibrary.Where(x => x.RaceId == id).First().HeroId)as Hero;
+            h.Id= ObjId++;
+            return h;
         }
 
-        internal static Event getEventById(int effect)
+        Event getEventById(int effect)
         {
             throw new NotImplementedException();
         }
 
-        static public Card getCardById(int id)
+         public Card getCardById(int id)
         {
-            return CardLibrary.Where(x => x.CardId == id).First().getCopy();
+            Card c= CardLibrary.Where(x => x.CardId == id).First().getCopy();
+            c.Id = CardId++;
+            return c;
         }
 
-        static public void InitLibs()
+         public void InitLibs()
         {
             CardLibrary = DataAccessor.getCardList();
             ObjectsLibrary = DataAccessor.getObjectList();

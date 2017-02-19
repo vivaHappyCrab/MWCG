@@ -14,9 +14,9 @@ namespace MWCGClasses
             switch (card.Type) { 
                 case CardType.Permanent:{
                         //CreateAction(opponent,PlayAnswer);
-                        GameObject perm=Factory.getObjectById(card.EntityId);
+                        GameObject perm=game.Factory.getObjectById(card.EntityId);
                         perm.onSummon?.Invoke(game, perm);
-                        //onObjectEnter(game, perm);must be in game.AddToBF
+                        onObjectEnter(game, perm);
                         game.AddToBattleField(perm,card.Owner);
                         break;
                 }
@@ -24,13 +24,12 @@ namespace MWCGClasses
         }
 
         public static void onObjectEnter(Game game, GameObject obj) {
-            foreach(Unit u in game.Players[obj.Owner.Num].Field.Units)
+            foreach (Player p in game.Players)
             {
-                u.onEnter(game, obj);
-            }
-            foreach (Unit u in game.Players[obj.Owner.Num].Field.Units)
-            {
-                u.onEnter(game, obj);
+                foreach (GameObject un in p.Field.Units)
+                    un.onEnter(game, obj);
+                foreach (GameObject sup in p.Field.Supports)
+                    sup.onEnter(game, obj);
             }
         }
 

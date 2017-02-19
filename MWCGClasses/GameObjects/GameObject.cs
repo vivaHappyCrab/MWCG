@@ -16,6 +16,8 @@ namespace MWCGClasses.GameObjects
     }
     public class GameObject
     {
+        public int Id { get; set; }
+
         public int BackCard { get; set; }
 
         public int ObjectNum { get; set; }
