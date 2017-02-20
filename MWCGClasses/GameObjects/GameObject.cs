@@ -16,6 +16,17 @@ namespace MWCGClasses.GameObjects
     }
     public class GameObject
     {
+        public void TakeDamage(int dmg,Game g)
+        {
+            if (dmg > 0) {
+                Health = Health - dmg;
+                g.ObjectTakesDamage(this);
+            }
+            if (Health < 0)
+                g.KillObject(this);
+
+        }
+        #region Props
         public int Id { get; set; }
 
         public int BackCard { get; set; }
@@ -24,19 +35,17 @@ namespace MWCGClasses.GameObjects
         
         public int Health { get; set; }
 
+        public int MaxHealth { get; set; }
+
         public Player Owner { get; set; }
 
         public ObjectType OType { get; set; }
 
-        internal GameObject getCopy()
-        {
-            return MemberwiseClone()as GameObject;
-        }
-
         public string Name { get; set; }
 
         public string Description { get; set; }
-
+        #endregion
+        #region Events
         public Event onSummon { get; set; }
 
         public Event onEnter { get; set; }
@@ -49,16 +58,21 @@ namespace MWCGClasses.GameObjects
 
         public Event onAbilityCastStart { get; set; }
         
-        public Event onAbilityCastCompleted { get; set; } 
+        public Event onAbilityCastCompleted { get; set; }
+        #endregion
 
         public GameObject(int cardback,int id,ObjectType otype,string name, string desc)
         {
             BackCard = cardback;
-            Health = -1;
+            MaxHealth=Health = -1;
             ObjectNum = id;
             OType = otype;
             Name = name;
             Description = desc;
+        }
+        internal GameObject getCopy()
+        {
+            return MemberwiseClone() as GameObject;
         }
     }
 }

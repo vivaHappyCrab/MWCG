@@ -21,6 +21,7 @@ namespace MWData
             }
             int targetId = g.Clients[obj.Owner.Num].CreateAction(MWCGClasses.ClientInterface.ActionType.FieldObjects,avtargets).Target;
             GameObject target = g.ObjectById(targetId);
+            target.TakeDamage(4);
         }
     }
 }

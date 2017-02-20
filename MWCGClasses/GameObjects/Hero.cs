@@ -10,7 +10,7 @@ namespace MWCGClasses.GameObjects
     {
         public Hero(int cardback,int id, string name, string desc, int hp, int ability) : base(cardback,id,ObjectType.hero, name, desc)
         {
-            Health = hp;
+            MaxHealth = Health = hp;
             Default = ability;
             Arts = new Artifact[3];
             //Arts[2] = Factory.getObjectById(ability)as Artifact; TODO IN GAME INIT

@@ -23,6 +23,18 @@ namespace MWCGClasses.InGame
             Factory = f;
         }
 
+        void KillObject(GameObject gameObject)
+        {
+            //todo
+            return;
+        }
+
+        internal void ObjectTakesDamage(GameObject gameObject)
+        {
+            //todo
+            return;
+        }
+
         public void AddToBattleField(GameObject perm, int owner)
         {
             GameAction.onObjectEnter(this, perm);
