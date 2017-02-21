@@ -25,7 +25,9 @@ namespace MagicWarCG
             foot.Type = CardType.Permanent;
             Unit footman = f.getObjectById(1)as Unit;
             Card c = f.getCardById(1);
+            Card sp = f.getCardById(3);
             GameAction.PlayCard(game, c);
+            GameAction.PlayCard(game, sp);
         }
     }
 }

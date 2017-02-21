@@ -23,7 +23,7 @@ namespace MWCGClasses.InGame
             Factory = f;
         }
 
-        void KillObject(GameObject gameObject)
+        public void KillObject(GameObject gameObject)
         {
             //todo
             return;

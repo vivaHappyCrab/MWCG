@@ -12,6 +12,7 @@ namespace MWCGClasses
     {
         public static void PlayCard(Game game, Card card)
         {
+            //todo:убрать из руки и вычесть ману на затраты
             switch (card.Type)
             {
                 case CardType.Permanent:
@@ -23,7 +24,27 @@ namespace MWCGClasses
                         game.AddToBattleField(perm, card.Owner);
                         break;
                     }
+                case CardType.Spell:
+                    {
+                        //CreateAction(opponent,PlayAnswer);
+                        Spell spell = game.Factory.getObjectById(card.EntityId)as Spell;
+                        onSpellStartedCast(game, spell);
+                        Event ev = game.Factory.getEventById(spell.Effect);
+                        ev.Invoke(game, spell);
+                        onSpellCompletedCast(game, spell);  
+                        break;
+                    }
             }
+        }
+
+        private static void onSpellCompletedCast(Game game, Spell spell)
+        {
+            throw new NotImplementedException();
+        }
+
+        private static void onSpellStartedCast(Game game, Spell spell)
+        {
+            throw new NotImplementedException();
         }
 
         public static void onObjectEnter(Game game, GameObject obj)

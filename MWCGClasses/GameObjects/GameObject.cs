@@ -44,7 +44,7 @@ namespace MWCGClasses.GameObjects
         public string Name { get; set; }
 
         public string Description { get; set; }
-        #endregion
+        #endregion3
         #region Events
         public Event onSummon { get; set; }
 
