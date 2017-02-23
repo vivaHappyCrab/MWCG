@@ -44,7 +44,8 @@ namespace MWCGClasses.GameObjects
         public string Name { get; set; }
 
         public string Description { get; set; }
-        #endregion3
+        #endregion
+
         #region Events
         public Event onSummon { get; set; }
 
@@ -59,6 +60,10 @@ namespace MWCGClasses.GameObjects
         public Event onAbilityCastStart { get; set; }
         
         public Event onAbilityCastCompleted { get; set; }
+
+        public Event onSpellCastStart { get; set; }
+
+        public Event onSpellCastCompleted { get; set; }
         #endregion
 
         public GameObject(int cardback,int id,ObjectType otype,string name, string desc)

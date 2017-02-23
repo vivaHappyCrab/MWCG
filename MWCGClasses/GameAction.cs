@@ -39,12 +39,28 @@ namespace MWCGClasses
 
         private static void onSpellCompletedCast(Game game, Spell spell)
         {
-            throw new NotImplementedException();
+            foreach (Player p in game.Players)
+            {
+                foreach (GameObject un in p.Field.Units)
+                    un.onSpellCastStart?.Invoke(game, spell);
+                foreach (GameObject sup in p.Field.Supports)
+                    sup.onSpellCastStart?.Invoke(game, spell);
+                foreach (GameObject art in p.Field.Face.Arts)
+                    art?.onSpellCastStart?.Invoke(game, spell);
+            }
         }
 
         private static void onSpellStartedCast(Game game, Spell spell)
         {
-            throw new NotImplementedException();
+            foreach (Player p in game.Players)
+            {
+                foreach (GameObject un in p.Field.Units)
+                    un.onSpellCastCompleted?.Invoke(game, spell);
+                foreach (GameObject sup in p.Field.Supports)
+                    sup.onSpellCastCompleted?.Invoke(game, spell);
+                foreach (GameObject art in p.Field.Face.Arts)
+                    art?.onSpellCastCompleted?.Invoke(game, spell);
+            }
         }
 
         public static void onObjectEnter(Game game, GameObject obj)
@@ -52,11 +68,11 @@ namespace MWCGClasses
             foreach (Player p in game.Players)
             {
                 foreach (GameObject un in p.Field.Units)
-                    un.onEnter(game, obj);
+                    un.onEnter?.Invoke(game, obj);
                 foreach (GameObject sup in p.Field.Supports)
-                    sup.onEnter(game, obj);
+                    sup.onEnter?.Invoke(game, obj);
                 foreach (GameObject art in p.Field.Face.Arts)
-                    art.onEnter(game, obj);
+                    art?.onEnter?.Invoke(game, obj);
             }
         }
 
@@ -65,11 +81,11 @@ namespace MWCGClasses
             foreach (Player p in game.Players)
             {
                 foreach (GameObject un in p.Field.Units)
-                    un.onTakeDamage(game, obj);
+                    un.onTakeDamage?.Invoke(game, obj);
                 foreach (GameObject sup in p.Field.Supports)
-                    sup.onTakeDamage(game, obj);
+                    sup.onTakeDamage?.Invoke(game, obj);
                 foreach (GameObject art in p.Field.Face.Arts)
-                    art.onEnter(game, obj);
+                    art?.onEnter?.Invoke(game, obj);
             }
         }
     }

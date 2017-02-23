@@ -11,44 +11,82 @@ namespace MWData
 {
     public class Factory
     {
-         List<Card> CardLibrary = new List<Card>();
-         List<GameObject> ObjectsLibrary = new List<GameObject>();
-         List<Race> RaceLibrary = new List<Race>();
-         int ObjId = 1;
-         int CardId = 1;
-         public GameObject getObjectById(int id)
+        List<Card> CardLibrary;
+        List<GameObject> ObjectsLibrary;
+        List<Race> RaceLibrary;
+        List<Event> EventMap;
+        int ObjId = 1;
+        int CardId = 1;
+        public GameObject getObjectById(int id)
         {
-            if (id <= 0) return null;
-            GameObject o=ObjectsLibrary.Where(x => x.ObjectNum == id).First().getCopy();
-            o.Id = ObjId++;
-            return o;
+            try
+            {
+                if (id <= 0) return null;
+                GameObject o = ObjectsLibrary.Where(x => x.ObjectNum == id).First().getCopy();
+                o.Id = ObjId++;
+                return o;
+            }
+            catch
+            {
+                return null;
+            }
         }
 
         public Hero GetHeroByRace(int id)
         {
-            Hero h=getObjectById(
-                RaceLibrary.Where(x => x.RaceId == id).First().HeroId)as Hero;
-            h.Id= ObjId++;
-            return h;
+            try
+            {
+                Hero h = getObjectById(RaceLibrary.Where(x => x.RaceId == id).First().HeroId) as Hero;
+                h.Id = ObjId++;
+                return h;
+            }
+            catch
+            {
+                return null;
+            }
         }
 
         public Event getEventById(int effect)
         {
-            throw new NotImplementedException();
+            try
+            {
+                return EventMap[effect];
+            }
+            catch
+            {
+                return null;
+            }
         }
 
-         public Card getCardById(int id)
+        public Card getCardById(int id)
         {
-            Card c= CardLibrary.Where(x => x.CardId == id).First().getCopy();
-            c.Id = CardId++;
-            return c;
+            try
+            {
+                Card c = CardLibrary.Where(x => x.CardId == id).First().getCopy();
+                c.Id = CardId++;
+                return c;
+            }
+            catch
+            {
+                return null;
+            }
         }
 
-         public void InitLibs()
+        public void InitLibs()
         {
             CardLibrary = DataAccessor.getCardList();
             ObjectsLibrary = DataAccessor.getObjectList();
             RaceLibrary = DataAccessor.getRaceList();
+            EventMap = InitEvents();
+        }
+
+        private List<Event> InitEvents()
+        {
+            List<Event> result = new List<Event>();
+
+            result.Add(SpellAction.FireBall);
+
+            return result;
         }
     }
 }

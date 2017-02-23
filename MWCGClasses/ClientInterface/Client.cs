@@ -10,7 +10,8 @@ namespace MWCGClasses.ClientInterface
         HandCard,
         LibCard,
         OppOpenCard,
-        OppCloseCard
+        OppCloseCard,
+        System 
     }
     public interface Client
     {
