@@ -21,6 +21,7 @@ namespace MWCGClasses.InGame
             Factory = f;
             Players.Add(new Player(race1,lib1,true,0,this));
             Players.Add(new Player(race2,lib2,false,1,this));
+            Clients = new List<Client>();
         }
 
         public void KillObject(GameObject gameObject)

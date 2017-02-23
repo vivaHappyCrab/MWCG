@@ -27,7 +27,7 @@ namespace MWCGClasses
                 case CardType.Spell:
                     {
                         //CreateAction(opponent,PlayAnswer);
-                        Spell spell = game.Factory.getObjectById(card.EntityId)as Spell;
+                        Spell spell = game.Factory.getObjectToPlayer(card.EntityId,game.Players[card.Owner])as Spell;
                         onSpellStartedCast(game, spell);
                         Event ev = game.Factory.getEventById(spell.Effect);
                         ev.Invoke(game, spell);

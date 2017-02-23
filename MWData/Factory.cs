@@ -72,6 +72,20 @@ namespace MWData
             }
         }
 
+        public GameObject getObjectToPlayer(int id,Player player)
+        {
+            GameObject res = getObjectById(id);
+            res.Owner = player;
+            return res;
+        }
+
+        public Card getCardToPlayer(int id, int playerNum)
+        {
+            Card res = getCardById(id);
+            res.Owner = playerNum;
+            return res;
+        }
+
         public void InitLibs()
         {
             CardLibrary = DataAccessor.getCardList();

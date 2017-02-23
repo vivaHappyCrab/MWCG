@@ -7,6 +7,7 @@ using MWCGClasses;
 using MWCGClasses.GameObjects;
 using MWCGClasses.InGame;
 using MWData;
+using MWCGClasses.ClientInterface;
 
 namespace MagicWarCG
 {
@@ -17,6 +18,8 @@ namespace MagicWarCG
             Factory f = new Factory();
             f.InitLibs();
             Game game = new Game(1, 1, null, null,f);
+            game.Clients.Add(new LocalConsoleClient());
+            game.Clients.Add(new LocalConsoleClient());
             Card foot=new Card();
             foot.ManaCost = 1;
             foot.Races = new int[1];
@@ -25,7 +28,7 @@ namespace MagicWarCG
             foot.Type = CardType.Permanent;
             Unit footman = f.getObjectById(1)as Unit;
             Card c = f.getCardById(1);
-            Card sp = f.getCardById(5);
+            Card sp = f.getCardToPlayer(5,0);
             GameAction.PlayCard(game, c);
             GameAction.PlayCard(game, sp);
         }

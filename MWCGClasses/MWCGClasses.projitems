@@ -12,6 +12,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Card.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ClientInterface\Answer.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ClientInterface\Client.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ClientInterface\LocalConsoleClient.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)GameAction.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)GameObjects\Ability.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)GameObjects\Artifact.cs" />
