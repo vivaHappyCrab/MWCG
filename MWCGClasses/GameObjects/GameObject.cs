@@ -1,24 +1,32 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using MWCGClasses.InGame;
+﻿using MWCGClasses.InGame;
+using MWCGClasses.Enums;
 
 namespace MWCGClasses.GameObjects
 {
-    public enum ObjectType
-    {
-        creature=0,
-        support=1,
-        hero=2,
-        spell =3,
-        ability=4,
-        artifact=5
-    }
     public class GameObject
     {
-        public void TakeDamage(int dmg,Game g)
+        #region Game(...)
+        public GameObject(int cardback, int id, ObjectType otype, string name, string desc)
         {
-            if (dmg > 0) {
+            BackCard = cardback;
+            MaxHealth = Health = -1;
+            ObjectNum = id;
+            OType = otype;
+            Name = name;
+            Description = desc;
+        }
+
+        public GameObject getCopy()
+        {
+            return MemberwiseClone() as GameObject;
+        }
+
+        #endregion
+
+        public virtual void TakeDamage(int dmg, Game g)
+        {
+            if (dmg > 0)
+            {
                 Health = Health - dmg;
                 g.ObjectTakesDamage(this);
             }
@@ -26,25 +34,6 @@ namespace MWCGClasses.GameObjects
                 g.KillObject(this);
 
         }
-        #region Props
-        public int Id { get; set; }
-
-        public int BackCard { get; set; }
-
-        public int ObjectNum { get; set; }
-        
-        public int Health { get; set; }
-
-        public int MaxHealth { get; set; }
-
-        public Player Owner { get; set; }
-
-        public ObjectType OType { get; set; }
-
-        public string Name { get; set; }
-
-        public string Description { get; set; }
-        #endregion
 
         #region Events
         public Event onSummon { get; set; }
@@ -58,7 +47,7 @@ namespace MWCGClasses.GameObjects
         public Event onTakeDamage { get; set; }
 
         public Event onAbilityCastStart { get; set; }
-        
+
         public Event onAbilityCastCompleted { get; set; }
 
         public Event onSpellCastStart { get; set; }
@@ -66,18 +55,53 @@ namespace MWCGClasses.GameObjects
         public Event onSpellCastCompleted { get; set; }
         #endregion
 
-        public GameObject(int cardback,int id,ObjectType otype,string name, string desc)
-        {
-            BackCard = cardback;
-            MaxHealth=Health = -1;
-            ObjectNum = id;
-            OType = otype;
-            Name = name;
-            Description = desc;
-        }
-        internal GameObject getCopy()
-        {
-            return MemberwiseClone() as GameObject;
-        }
+        #region Props
+        /// <summary>
+        /// Номер объекта в игре
+        /// </summary>
+        /// <remarks>Уникален для каждого объекта</remarks>
+        public int Id { get; set; }
+
+        /// <summary>
+        /// id карты отвечающей за создание объекта
+        /// </summary>
+        public int BackCard { get; set; }
+
+        /// <summary>
+        /// id типа объекта
+        /// </summary>
+        /// <remarks>Уникален для типа объекта</remarks>
+        public int ObjectNum { get; set; }
+
+        /// <summary>
+        /// Здоровье объекта(прочность)
+        /// </summary>
+        public int Health { get; set; }
+
+        /// <summary>
+        /// Максимальное здоровье объекта
+        /// </summary>
+        public int MaxHealth { get; set; }
+
+        /// <summary>
+        /// Ссылка на игрока владельца объекта //todo: заменить на номер игрока?
+        /// </summary>
+        public Player Owner { get; set; }
+
+        /// <summary>
+        /// Тип объекта
+        /// </summary>
+        public ObjectType OType { get; set; }
+
+        /// <summary>
+        /// Имя объекта
+        /// </summary>
+        public string Name { get; set; }
+
+        /// <summary>
+        /// Описание объекта
+        /// </summary>
+        public string Description { get; set; }
+        #endregion
     }
 }

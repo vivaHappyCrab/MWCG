@@ -1,4 +1,5 @@
-﻿using MWCGClasses.InGame;
+﻿using MWCGClasses.Enums;
+using MWCGClasses.InGame;
 using MWData;
 using System;
 using System.Collections.Generic;
@@ -8,7 +9,8 @@ namespace MWCGClasses.GameObjects
 {
     public class Hero : GameObject
     {
-        public Hero(int cardback,int id, string name, string desc, int hp, int ability) : base(cardback,id,ObjectType.hero, name, desc)
+        public Hero(int cardback,int id, string name, string desc, int hp, int ability) : 
+            base(cardback,id,ObjectType.hero, name, desc)
         {
             MaxHealth = Health = hp;
             Default = ability;

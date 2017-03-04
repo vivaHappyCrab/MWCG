@@ -8,6 +8,7 @@ using MWCGClasses.GameObjects;
 using MWCGClasses.InGame;
 using System.Data.SqlClient;
 using System.Data;
+using MWCGClasses.Enums;
 
 namespace MWData
 {
