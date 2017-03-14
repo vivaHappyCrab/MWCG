@@ -1,11 +1,38 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace MWCGClasses.InGame
 {
+    /// <summary>
+    /// Библиотека игрока.
+    /// </summary>
     public class Library
     {
-        public List<Card> LibCrad { get; set; }
+        /// <summary>
+        /// Конструктор пустой библиотеки.
+        /// </summary>
+        public Library()
+        {
+            Cards = new List<Card>();
+        }
+
+        public void Shuffle()
+        {
+            Random rnd = new Random();
+            List<Card> newLib = new List<Card>();
+            while(Cards.Count>0)
+            {
+                int n = rnd.Next(Cards.Count);
+                Card c = Cards[n];
+                Cards.Remove(c);
+                newLib.Add(c);
+            }
+            Cards = newLib;
+        }
+
+        /// <summary>
+        /// Список карт.
+        /// </summary>
+        public List<Card> Cards { get; set; }
     }
 }

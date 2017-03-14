@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace MWCGClasses.ClientInterface
 {
@@ -13,7 +11,7 @@ namespace MWCGClasses.ClientInterface
         OppCloseCard,
         System 
     }
-    public interface Client
+    public interface IClient
     {
         Answer CreateAction(ActionType type, List<int> targets);
     }

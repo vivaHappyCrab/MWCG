@@ -1,9 +1,4 @@
 ﻿using MWCGClasses.Enums;
-using MWCGClasses.InGame;
-using MWData;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace MWCGClasses.GameObjects
 {

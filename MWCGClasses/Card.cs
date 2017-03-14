@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using MWCGClasses.GameObjects;
-
-namespace MWCGClasses
+﻿namespace MWCGClasses
 {
     public enum CardType
     {

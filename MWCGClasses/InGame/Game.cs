@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 using MWCGClasses.GameObjects;
 using MWData;
 using MWCGClasses.ClientInterface;
@@ -37,7 +35,7 @@ namespace MWCGClasses.InGame
             Players.Add(new Player(race2, lib2, false, 1, this));
             foreach (Player p in Players)
                 objects.Add(p.Field.Face.Id, p.Field.Face);
-            Clients = new List<Client>();
+            Clients = new List<IClient>();
         }
 
         #endregion
@@ -105,7 +103,7 @@ namespace MWCGClasses.InGame
         /// <returns>Игровой объект</returns>
         public GameObject CreateObject(int id)
         {
-            GameObject obj = Factory.getObjectById(id);
+            GameObject obj = Factory.GetObjectById(id);
             objects.Add(obj.Id, obj);
             return obj;
         }
@@ -127,7 +125,7 @@ namespace MWCGClasses.InGame
         /// <summary>
         /// Обработчики клиентов игроков
         /// </summary>
-        public List<Client> Clients { get; set; }
+        public List<IClient> Clients { get; set; }
 
         #endregion
     }

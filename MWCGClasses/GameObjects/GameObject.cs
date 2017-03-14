@@ -16,7 +16,7 @@ namespace MWCGClasses.GameObjects
             Description = desc;
         }
 
-        public GameObject getCopy()
+        public GameObject GetCopy()
         {
             return MemberwiseClone() as GameObject;
         }

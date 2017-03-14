@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 using MWCGClasses.GameObjects;
-using MWData;
 using MWCGClasses.Enums;
 
 namespace MWCGClasses.InGame

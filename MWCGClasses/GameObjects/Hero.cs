@@ -1,9 +1,4 @@
 ﻿using MWCGClasses.Enums;
-using MWCGClasses.InGame;
-using MWData;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace MWCGClasses.GameObjects
 {
@@ -15,7 +10,7 @@ namespace MWCGClasses.GameObjects
             MaxHealth = Health = hp;
             Default = ability;
             Arts = new Artifact[3];
-            //Arts[2] = Factory.getObjectById(ability)as Artifact; TODO IN GAME INIT
+            //Arts[2] = Factory.GetObjectById(ability)as Artifact; TODO IN GAME INIT
             Attack = 0;
             CanAttack = false;
         }

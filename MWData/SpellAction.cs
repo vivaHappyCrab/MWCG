@@ -1,11 +1,6 @@
-﻿using MWCGClasses;
-using MWCGClasses.GameObjects;
+﻿using MWCGClasses.GameObjects;
 using MWCGClasses.InGame;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MWData
 {

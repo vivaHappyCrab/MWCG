@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace MWCGClasses.Enums
+﻿namespace MWCGClasses.Enums
 {
     public enum ObjectType
     {

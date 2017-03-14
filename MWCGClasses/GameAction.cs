@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using MWCGClasses.InGame;
+﻿using MWCGClasses.InGame;
 using MWCGClasses.GameObjects;
-using MWData;
 
 namespace MWCGClasses
 {
@@ -27,9 +23,9 @@ namespace MWCGClasses
                 case CardType.Spell:
                     {
                         //CreateAction(opponent,PlayAnswer);
-                        Spell spell = game.Factory.getObjectToPlayer(card.EntityId,game.Players[card.Owner])as Spell;
+                        Spell spell = game.Factory.GetObjectToPlayer(card.EntityId,game.Players[card.Owner])as Spell;
                         onSpellStartedCast(game, spell);
-                        Event ev = game.Factory.getEventById(spell.Effect);
+                        Event ev = game.Factory.GetEventById(spell.Effect);
                         ev.Invoke(game, spell);
                         onSpellCompletedCast(game, spell);  
                         break;
