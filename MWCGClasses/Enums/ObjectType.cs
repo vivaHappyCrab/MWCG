@@ -2,11 +2,11 @@
 {
     public enum ObjectType
     {
-        creature = 0,
-        support = 1,
-        hero = 2,
-        spell = 3,
-        ability = 4,
-        artifact = 5
+        Creature = 0,
+        Support = 1,
+        Hero = 2,
+        Spell = 3,
+        Ability = 4,
+        Artifact = 5
     }
 }

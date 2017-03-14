@@ -50,7 +50,7 @@ namespace MWData
         {
             try
             {
-                Card c = _cardLibrary.First(x => x.CardId == id).getCopy();
+                Card c = _cardLibrary.First(x => x.CardId == id).GetCopy();
 
                 if (c == null) return null;
                 c.Id = _cardId++;
@@ -78,9 +78,9 @@ namespace MWData
 
         public void InitLibs()
         {
-            _cardLibrary = DataAccessor.getCardList();
-            _objectsLibrary = DataAccessor.getObjectList();
-            _raceLibrary = DataAccessor.getRaceList();
+            _cardLibrary = DataAccessor.GetCardList();
+            _objectsLibrary = DataAccessor.GetObjectList();
+            _raceLibrary = DataAccessor.GetRaceList();
             _eventMap = InitEvents();
         }
 

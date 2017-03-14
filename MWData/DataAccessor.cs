@@ -9,16 +9,15 @@ namespace MWData
 {
     public class DataAccessor
     {
-        public static string connector = @"Server=CRAB\SQLDB; DataBase=MagicWar;Integrated Security=SSPI; ";
+        public static string Connector = @"Server=CRAB\SQLDB; DataBase=MagicWar;Integrated Security=SSPI; ";
 
-        static public Card getCard(int id)
+        public static Card GetCard(int id)
         {
             Card card = new Card();
-            using (SqlConnection cn=new SqlConnection(connector))
+            using (SqlConnection cn=new SqlConnection(Connector))
             {
                 cn.Open();
-                SqlCommand cmd = new SqlCommand("dbo.getCard",cn);
-                cmd.CommandType = CommandType.StoredProcedure;
+                SqlCommand cmd = new SqlCommand("dbo.getCard", cn) {CommandType = CommandType.StoredProcedure};
                 cmd.Parameters.Add(new SqlParameter("id", id));
                 SqlDataReader res=cmd.ExecuteReader();
                 res.Read();
@@ -34,73 +33,73 @@ namespace MWData
             }
             return card;
         }
-        static public List<Card> getCardList()
+        public static List<Card> GetCardList()
         {
             List<Card> result = new List<Card>();
-            using (SqlConnection cn = new SqlConnection(connector))
+            using (SqlConnection cn = new SqlConnection(Connector))
             {
                 cn.Open();
-                SqlCommand cmd = new SqlCommand("dbo.getCard", cn);
-                cmd.CommandType = CommandType.StoredProcedure;
+                SqlCommand cmd = new SqlCommand("dbo.getCard", cn) {CommandType = CommandType.StoredProcedure};
                 SqlDataReader res = cmd.ExecuteReader();
                 while (res.Read())
                 {
-                    Card card = new Card();
-                    card.CardId = (int)res["CardId"];
-                    card.Collectable = (bool)res["Collectable"];
-                    card.Description = (string)res["Description"];
-                    card.EntityId = (int)res["EntityId"];
-                    card.ManaCost = (int)res["ManaCost"];
-                    card.Name = (string)res["Name"];
-                    card.Rarity = (RareType)res["Rarity"];
-                    card.Type = (CardType)res["Type"];
+                    Card card = new Card
+                    {
+                        CardId = (int) res["CardId"],
+                        Collectable = (bool) res["Collectable"],
+                        Description = (string) res["Description"],
+                        EntityId = (int) res["EntityId"],
+                        ManaCost = (int) res["ManaCost"],
+                        Name = (string) res["Name"],
+                        Rarity = (RareType) res["Rarity"],
+                        Type = (CardType) res["Type"]
+                    };
                     result.Add(card);
                 }
                 cn.Dispose();
             }
             return result;
         }
-        static public List<GameObject> getObjectList()
+        public static List<GameObject> GetObjectList()
         {
             List<GameObject> result = new List<GameObject>();
-            using (SqlConnection cn = new SqlConnection(connector))
+            using (SqlConnection cn = new SqlConnection(Connector))
             {
                 cn.Open();
-                SqlCommand cmd = new SqlCommand("dbo.getGameObject", cn);
-                cmd.CommandType = CommandType.StoredProcedure;
+                SqlCommand cmd = new SqlCommand("dbo.getGameObject", cn) {CommandType = CommandType.StoredProcedure};
                 SqlDataReader res = cmd.ExecuteReader();
                 while (res.Read())
                 {
                     GameObject o;
-                    switch ((ObjectType)(res["OType"]))
+                    switch ((ObjectType)res["OType"])
                     {
-                        case ObjectType.creature: {
-                                o = new Unit((int)(res["BackCard"]), (int)(res["ObjectNum"]), res["Name"].ToString(), res["Description"].ToString(), (int)(res["Attack"]), (int)(res["Health"])); 
+                        case ObjectType.Creature: {
+                                o = new Unit((int)res["BackCard"], (int)res["ObjectNum"], res["Name"].ToString(), res["Description"].ToString(), (int)res["Attack"], (int)res["Health"]); 
                                 break;
                             }
-                        case ObjectType.support:
+                        case ObjectType.Support:
                             {
-                                o = new Support((int)(res["BackCard"]), (int)(res["ObjectNum"]), res["Name"].ToString(), res["Description"].ToString(), (int)(res["Health"]));
+                                o = new Support((int)res["BackCard"], (int)res["ObjectNum"], res["Name"].ToString(), res["Description"].ToString(), (int)res["Health"]);
                                 break;
                             }
-                        case ObjectType.hero:
+                        case ObjectType.Hero:
                             {
-                                o = new Hero((int)(res["BackCard"]), (int)(res["ObjectNum"]), res["Name"].ToString(), res["Description"].ToString(), (int)(res["Health"]), (int)(res["Default"]));
+                                o = new Hero((int)res["BackCard"], (int)res["ObjectNum"], res["Name"].ToString(), res["Description"].ToString(), (int)res["Health"], (int)res["Default"]);
                                 break;
                             }
-                        case ObjectType.spell:
+                        case ObjectType.Spell:
                             {
-                                o = new Spell((int)(res["BackCard"]), (int)(res["ObjectNum"]), (int)(res["Default"]), res["Name"].ToString(), res["Description"].ToString());
+                                o = new Spell((int)res["BackCard"], (int)res["ObjectNum"], (int)res["Default"], res["Name"].ToString(), res["Description"].ToString());
                                 break;
                             }
-                        case ObjectType.artifact:
+                        case ObjectType.Artifact:
                             {
-                                o = new Artifact((int)(res["BackCard"]), (int)(res["ObjectNum"]), res["Name"].ToString(), res["Description"].ToString(), (ArtType)(res["Default"]), (int)(res["Health"]));
+                                o = new Artifact((int)res["BackCard"], (int)res["ObjectNum"], res["Name"].ToString(), res["Description"].ToString(), (ArtType)res["Default"], (int)res["Health"]);
                                 break;
                             }
-                        case ObjectType.ability:
+                        case ObjectType.Ability:
                             {
-                                o = new Ability((int)(res["BackCard"]), (int)(res["ObjectNum"]), (int)(res["Default"]), (int)(res["Cost"]), (bool)(res["Attack"]), res["Name"].ToString(), res["Description"].ToString());
+                                o = new Ability((int)res["BackCard"], (int)res["ObjectNum"], (int)res["Default"], (int)res["Cost"], (bool)res["Attack"], res["Name"].ToString(), res["Description"].ToString());
                                 break;
                             }
                         default: { o = null;break; }
@@ -111,47 +110,46 @@ namespace MWData
             }
             return result;
         }
-        static public GameObject getObject(int id)
+        public static GameObject GetObject(int id)
         {
             GameObject o;
-            using (SqlConnection cn = new SqlConnection(connector))
+            using (SqlConnection cn = new SqlConnection(Connector))
             {
                 cn.Open();
-                SqlCommand cmd = new SqlCommand("dbo.getGameObject", cn);
-                cmd.CommandType = CommandType.StoredProcedure;
+                SqlCommand cmd = new SqlCommand("dbo.getGameObject", cn) {CommandType = CommandType.StoredProcedure};
                 cmd.Parameters.Add(new SqlParameter("id", id));
                 SqlDataReader res = cmd.ExecuteReader();
                 res.Read();
-                    switch ((ObjectType)(res["OType"]))
+                    switch ((ObjectType)res["OType"])
                     {
-                        case ObjectType.creature:
+                        case ObjectType.Creature:
                             {
-                                o = new Unit((int)(res["BackCard"]), (int)(res["ObjectNum"]), res["Name"].ToString(), res["Description"].ToString(), (int)(res["Attack"]), (int)(res["Health"]));
+                                o = new Unit((int)res["BackCard"], (int)res["ObjectNum"], res["Name"].ToString(), res["Description"].ToString(), (int)res["Attack"], (int)res["Health"]);
                                 break;
                             }
-                        case ObjectType.support:
+                        case ObjectType.Support:
                             {
-                                o = new Support((int)(res["BackCard"]), (int)(res["ObjectNum"]), res["Name"].ToString(), res["Description"].ToString(), (int)(res["Health"]));
+                                o = new Support((int)res["BackCard"], (int)res["ObjectNum"], res["Name"].ToString(), res["Description"].ToString(), (int)res["Health"]);
                                 break;
                             }
-                        case ObjectType.hero:
+                        case ObjectType.Hero:
                             {
-                                o = new Hero((int)(res["BackCard"]), (int)(res["ObjectNum"]), res["Name"].ToString(), res["Description"].ToString(), (int)(res["Health"]), (int)(res["Default"]));
+                                o = new Hero((int)res["BackCard"], (int)res["ObjectNum"], res["Name"].ToString(), res["Description"].ToString(), (int)res["Health"], (int)res["Default"]);
                                 break;
                             }
-                        case ObjectType.spell:
+                        case ObjectType.Spell:
                             {
-                                o = new Spell((int)(res["BackCard"]), (int)(res["ObjectNum"]), (int)(res["Default"]), res["Name"].ToString(), res["Description"].ToString());
+                                o = new Spell((int)res["BackCard"], (int)res["ObjectNum"], (int)res["Default"], res["Name"].ToString(), res["Description"].ToString());
                                 break;
                             }
-                        case ObjectType.artifact:
+                        case ObjectType.Artifact:
                             {
-                                o = new Artifact((int)(res["BackCard"]), (int)(res["ObjectNum"]), res["Name"].ToString(), res["Description"].ToString(), (ArtType)(res["Default"]), (int)(res["Health"]));
+                                o = new Artifact((int)res["BackCard"], (int)res["ObjectNum"], res["Name"].ToString(), res["Description"].ToString(), (ArtType)res["Default"], (int)res["Health"]);
                                 break;
                             }
-                        case ObjectType.ability:
+                        case ObjectType.Ability:
                             {
-                                o = new Ability((int)(res["BackCard"]), (int)(res["ObjectNum"]), (int)(res["Default"]), (int)(res["Cost"]), (bool)(res["Attack"]), res["Name"].ToString(), res["Description"].ToString());
+                                o = new Ability((int)res["BackCard"], (int)res["ObjectNum"], (int)res["Default"], (int)res["Cost"], (bool)res["Attack"], res["Name"].ToString(), res["Description"].ToString());
                                 break;
                             }
                         default: { o = null; break; }
@@ -160,38 +158,38 @@ namespace MWData
             }
             return o;
         }
-        public static Race getRace(int id)
+        public static Race GetRace(int id)
         {
             Race race = new Race();
-            using (SqlConnection cn = new SqlConnection(connector))
+            using (SqlConnection cn = new SqlConnection(Connector))
             {
                 cn.Open();
-                SqlCommand cmd = new SqlCommand("dbo.getRace", cn);
-                cmd.CommandType = CommandType.StoredProcedure;
+                SqlCommand cmd = new SqlCommand("dbo.getRace", cn) {CommandType = CommandType.StoredProcedure};
                 cmd.Parameters.Add(new SqlParameter("id", id));
                 SqlDataReader res = cmd.ExecuteReader();
                 res.Read();
-                race.RaceId = (int)(res["RaceId"]);
+                race.RaceId = (int)res["RaceId"];
                 race.Name = res["Name"].ToString();
-                race.HeroId = (int)(res["HeroId"]);
+                race.HeroId = (int)res["HeroId"];
             }
             return race;
         }
-        public static List<Race> getRaceList()
+        public static List<Race> GetRaceList()
         {
             List<Race> result = new List<Race>();
-            using (SqlConnection cn = new SqlConnection(connector))
+            using (SqlConnection cn = new SqlConnection(Connector))
             {
                 cn.Open();
-                SqlCommand cmd = new SqlCommand("dbo.getRace", cn);
-                cmd.CommandType = CommandType.StoredProcedure;
+                SqlCommand cmd = new SqlCommand("dbo.getRace", cn) {CommandType = CommandType.StoredProcedure};
                 SqlDataReader res = cmd.ExecuteReader();
                 while (res.Read())
                 {
-                    Race race = new Race();
-                    race.RaceId = (int)(res["RaceId"]);
-                    race.Name = res["Name"].ToString();
-                    race.HeroId = (int)(res["HeroId"]);
+                    Race race = new Race
+                    {
+                        RaceId = (int) res["RaceId"],
+                        Name = res["Name"].ToString(),
+                        HeroId = (int) res["HeroId"]
+                    };
                     result.Add(race);
                 }
                 cn.Dispose();

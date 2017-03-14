@@ -36,7 +36,7 @@
 
         public int CardId { get; set; }
 
-        internal Card getCopy()
+        internal Card GetCopy()
         {
             return MemberwiseClone() as Card;
         }

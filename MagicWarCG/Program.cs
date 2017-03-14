@@ -1,12 +1,11 @@
 ﻿using MWCGClasses;
-using MWCGClasses.GameObjects;
 using MWCGClasses.InGame;
 using MWData;
 using MWCGClasses.ClientInterface;
 
 namespace MagicWarCG
 {
-    class Program
+    internal class Program
     {
         static void Main(string[] args)
         {
@@ -22,14 +21,16 @@ namespace MagicWarCG
             game.Clients.Add(new LocalConsoleClient());
             game.Clients.Add(new LocalConsoleClient());
 
-            Card foot=new Card();
-            foot.ManaCost = 1;
-            foot.Races = new int[1];
-            foot.Races[0] = 1;
-            foot.Rarity = RareType.Common;
-            foot.Type = CardType.Permanent;
+            Card foot = new Card
+            {
+                ManaCost = 1,
+                Races = new int[1],
+                Rarity = RareType.Common,
+                Type = CardType.Permanent
+            };
 
-            Unit footman = f.GetObjectById(1)as Unit;
+            foot.Races[0] = 1;
+
             Card c = f.GetCardById(1);
             Card sp = f.GetCardToPlayer(5,0);
 

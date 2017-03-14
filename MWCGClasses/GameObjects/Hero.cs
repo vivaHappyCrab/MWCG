@@ -5,7 +5,7 @@ namespace MWCGClasses.GameObjects
     public class Hero : GameObject
     {
         public Hero(int cardback,int id, string name, string desc, int hp, int ability) : 
-            base(cardback,id,ObjectType.hero, name, desc)
+            base(cardback,id,ObjectType.Hero, name, desc)
         {
             MaxHealth = Health = hp;
             Default = ability;

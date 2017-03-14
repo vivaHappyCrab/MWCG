@@ -13,7 +13,7 @@ namespace MWCGClasses.InGame
         /// <summary>
         /// Список всех игровых объектов в этой игре
         /// </summary>
-        private Dictionary<int, GameObject> objects = new Dictionary<int, GameObject>();
+        private readonly Dictionary<int, GameObject> _objects = new Dictionary<int, GameObject>();
 
         #endregion
 
@@ -34,7 +34,7 @@ namespace MWCGClasses.InGame
             Players.Add(new Player(race1, lib1, true, 0, this));
             Players.Add(new Player(race2, lib2, false, 1, this));
             foreach (Player p in Players)
-                objects.Add(p.Field.Face.Id, p.Field.Face);
+                _objects.Add(p.Field.Face.Id, p.Field.Face);
             Clients = new List<IClient>();
         }
 
@@ -49,7 +49,7 @@ namespace MWCGClasses.InGame
         public void KillObject(GameObject gameObject)
         {
             gameObject.Owner.Kill(gameObject);
-            GameAction.onDeath(this,gameObject);
+            GameAction.OnDeath(this,gameObject);
         }
 
         /// <summary>
@@ -59,7 +59,6 @@ namespace MWCGClasses.InGame
         public void ObjectTakesDamage(GameObject gameObject)
         {
             //todo
-            return;
         }
 
         /// <summary>
@@ -69,20 +68,17 @@ namespace MWCGClasses.InGame
         /// <param name="owner">Владелец объекта</param>
         public void AddToBattleField(GameObject perm, int owner)
         {
-            GameAction.onObjectEnter(this, perm);
+            perm.Owner = Players[owner];
+            GameAction.OnObjectEnter(this, perm);
             switch (perm.OType)
             {
-                case ObjectType.creature:
-                    {
+                case ObjectType.Creature:
                         Players[owner].Field.Units.Add(perm as Unit);
                         break;
-                    }
-                case ObjectType.support:
-                    {
+
+                case ObjectType.Support:
                         Players[owner].Field.Supports.Add(perm as Support);
                         break;
-                    }
-
             }
         }
 
@@ -93,7 +89,7 @@ namespace MWCGClasses.InGame
         /// <returns></returns>
         public GameObject ObjectById(int targetId)
         {
-            return objects[targetId];
+            return _objects[targetId];
         }
 
         /// <summary>
@@ -104,7 +100,7 @@ namespace MWCGClasses.InGame
         public GameObject CreateObject(int id)
         {
             GameObject obj = Factory.GetObjectById(id);
-            objects.Add(obj.Id, obj);
+            _objects.Add(obj.Id, obj);
             return obj;
         }
 

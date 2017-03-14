@@ -1,6 +1,7 @@
 ﻿using MWCGClasses.GameObjects;
 using MWCGClasses.InGame;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace MWData
 {
@@ -11,10 +12,9 @@ namespace MWData
             List<int> avtargets = new List<int>();
             foreach(Player p in g.Players)
             {
-                foreach (Unit u in p.Field.Units)
-                    avtargets.Add(u.Id);
-                foreach (Support s in p.Field.Supports)
-                    avtargets.Add(s.Id);
+                avtargets.AddRange(p.Field.Units.Select(u => u.Id));
+                avtargets.AddRange(p.Field.Supports.Select(s => s.Id));
+
                 avtargets.Add(p.Field.Face.Id);
             }
             int targetId = g.Clients[obj.Owner.Num].CreateAction(MWCGClasses.ClientInterface.ActionType.FieldObjects,avtargets).Target;

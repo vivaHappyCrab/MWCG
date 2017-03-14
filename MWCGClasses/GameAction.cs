@@ -15,8 +15,8 @@ namespace MWCGClasses
                     {
                         //CreateAction(opponent,PlayAnswer);
                         GameObject perm = game.CreateObject(card.EntityId);
-                        perm.onSummon?.Invoke(game, perm);
-                        onObjectEnter(game, perm);
+                        perm.OnSummon?.Invoke(game, perm);
+                        OnObjectEnter(game, perm);
                         game.AddToBattleField(perm, card.Owner);
                         break;
                     }
@@ -24,10 +24,11 @@ namespace MWCGClasses
                     {
                         //CreateAction(opponent,PlayAnswer);
                         Spell spell = game.Factory.GetObjectToPlayer(card.EntityId,game.Players[card.Owner])as Spell;
-                        onSpellStartedCast(game, spell);
+                        OnSpellStartedCast(game, spell);
+                        if(spell==null)return;
                         Event ev = game.Factory.GetEventById(spell.Effect);
                         ev.Invoke(game, spell);
-                        onSpellCompletedCast(game, spell);  
+                        OnSpellCompletedCast(game, spell);  
                         break;
                     }
             }
@@ -35,68 +36,68 @@ namespace MWCGClasses
 
         #region Event generators
 
-        private static void onSpellCompletedCast(Game game, Spell spell)
+        private static void OnSpellCompletedCast(Game game, Spell spell)
         {
             foreach (Player p in game.Players)
             {
-                foreach (GameObject un in p.Field.Units)
-                    un.onSpellCastStart?.Invoke(game, spell);
-                foreach (GameObject sup in p.Field.Supports)
-                    sup.onSpellCastStart?.Invoke(game, spell);
-                foreach (GameObject art in p.Field.Face.Arts)
-                    art?.onSpellCastStart?.Invoke(game, spell);
+                foreach (Unit un in p.Field.Units)
+                    un.OnSpellCastStart?.Invoke(game, spell);
+                foreach (Support sup in p.Field.Supports)
+                    sup.OnSpellCastStart?.Invoke(game, spell);
+                foreach (Artifact art in p.Field.Face.Arts)
+                    art?.OnSpellCastStart?.Invoke(game, spell);
             }
         }
 
-        private static void onSpellStartedCast(Game game, Spell spell)
+        private static void OnSpellStartedCast(Game game, Spell spell)
         {
             foreach (Player p in game.Players)
             {
-                foreach (GameObject un in p.Field.Units)
-                    un.onSpellCastCompleted?.Invoke(game, spell);
-                foreach (GameObject sup in p.Field.Supports)
-                    sup.onSpellCastCompleted?.Invoke(game, spell);
-                foreach (GameObject art in p.Field.Face.Arts)
-                    art?.onSpellCastCompleted?.Invoke(game, spell);
+                foreach (Unit un in p.Field.Units)
+                    un.OnSpellCastCompleted?.Invoke(game, spell);
+                foreach (Support sup in p.Field.Supports)
+                    sup.OnSpellCastCompleted?.Invoke(game, spell);
+                foreach (Artifact art in p.Field.Face.Arts)
+                    art?.OnSpellCastCompleted?.Invoke(game, spell);
             }
         }
 
-        public static void onObjectEnter(Game game, GameObject obj)
+        public static void OnObjectEnter(Game game, GameObject obj)
         {
             foreach (Player p in game.Players)
             {
-                foreach (GameObject un in p.Field.Units)
-                    un.onEnter?.Invoke(game, obj);
-                foreach (GameObject sup in p.Field.Supports)
-                    sup.onEnter?.Invoke(game, obj);
-                foreach (GameObject art in p.Field.Face.Arts)
-                    art?.onEnter?.Invoke(game, obj);
+                foreach (Unit un in p.Field.Units)
+                    un.OnEnter?.Invoke(game, obj);
+                foreach (Support sup in p.Field.Supports)
+                    sup.OnEnter?.Invoke(game, obj);
+                foreach (Artifact art in p.Field.Face.Arts)
+                    art?.OnEnter?.Invoke(game, obj);
             }
         }
 
-        public static void onObjectTakesDamage(Game game, GameObject obj)
+        public static void OnObjectTakesDamage(Game game, GameObject obj)
         {
             foreach (Player p in game.Players)
             {
-                foreach (GameObject un in p.Field.Units)
-                    un.onTakeDamage?.Invoke(game, obj);
-                foreach (GameObject sup in p.Field.Supports)
-                    sup.onTakeDamage?.Invoke(game, obj);
-                foreach (GameObject art in p.Field.Face.Arts)
-                    art?.onEnter?.Invoke(game, obj);
+                foreach (Unit un in p.Field.Units)
+                    un.OnTakeDamage?.Invoke(game, obj);
+                foreach (Support sup in p.Field.Supports)
+                    sup.OnTakeDamage?.Invoke(game, obj);
+                foreach (Artifact art in p.Field.Face.Arts)
+                    art?.OnEnter?.Invoke(game, obj);
             }
         }
 
-        public static void onDeath(Game game, GameObject obj)
+        public static void OnDeath(Game game, GameObject obj)
         {
             foreach (Player p in game.Players)
             {
-                foreach (GameObject un in p.Field.Units)
-                    un.onDeath?.Invoke(game, obj);
-                foreach (GameObject sup in p.Field.Supports)
-                    sup.onDeath?.Invoke(game, obj);
-                foreach (GameObject art in p.Field.Face.Arts)
-                    art?.onDeath?.Invoke(game, obj);
+                foreach (Unit un in p.Field.Units)
+                    un.OnDeath?.Invoke(game, obj);
+                foreach (Support sup in p.Field.Supports)
+                    sup.OnDeath?.Invoke(game, obj);
+                foreach (Artifact art in p.Field.Face.Arts)
+                    art?.OnDeath?.Invoke(game, obj);
             }
         }
         #endregion

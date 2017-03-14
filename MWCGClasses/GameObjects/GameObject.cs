@@ -36,23 +36,23 @@ namespace MWCGClasses.GameObjects
         }
 
         #region Events
-        public Event onSummon { get; set; }
+        public Event OnSummon { get; set; }
 
-        public Event onEnter { get; set; }
+        public Event OnEnter { get; set; }
 
-        public Event onDeath { get; set; }
+        public Event OnDeath { get; set; }
 
-        public Event onRemove { get; set; }
+        public Event OnRemove { get; set; }
 
-        public Event onTakeDamage { get; set; }
+        public Event OnTakeDamage { get; set; }
 
-        public Event onAbilityCastStart { get; set; }
+        public Event OnAbilityCastStart { get; set; }
 
-        public Event onAbilityCastCompleted { get; set; }
+        public Event OnAbilityCastCompleted { get; set; }
 
-        public Event onSpellCastStart { get; set; }
+        public Event OnSpellCastStart { get; set; }
 
-        public Event onSpellCastCompleted { get; set; }
+        public Event OnSpellCastCompleted { get; set; }
         #endregion
 
         #region Props

@@ -26,23 +26,20 @@ namespace MWCGClasses.InGame
         public void Kill(GameObject obj)
         {
             switch(obj.OType){
-                case ObjectType.creature:
+                case ObjectType.Creature:
                     Field.Units.Remove(obj as Unit);
                     Graves.Graves.Add(obj);
 
                     break;
-                case ObjectType.support:
+                case ObjectType.Support:
                     Field.Supports.Remove(obj as Support);
                     Graves.Graves.Add(obj);
                     break;
 
-                case ObjectType.hero:
+                case ObjectType.Hero:
                     //Win_Lose Event
                     break;
-
-                default:
-                    break;
-                    }
+            }
         }
 
         #endregion
