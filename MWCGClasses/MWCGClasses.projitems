@@ -28,6 +28,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)InGame\Graveyard.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)InGame\Library.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)InGame\Player.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)PlayerDeck.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Race.cs" />
   </ItemGroup>
 </Project>

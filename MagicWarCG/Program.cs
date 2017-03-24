@@ -7,19 +7,33 @@ namespace MagicWarCG
 {
     internal class Program
     {
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
             Factory f = new Factory();
             f.InitLibs();
 
-            Library firstLib = new Library();
-            for (int i = 0; i < 10; i++)
-                firstLib.Cards.Add(f.GetCardById(1));
-            firstLib.Shuffle();
+            if(args.Length!=0)
+                return;
 
-            Game game = new Game(1, 1, null, null,f);
+            PlayerDeck deck1=new PlayerDeck();
+            deck1.AddCards(1, 4);
+            deck1.AddCards(5, 2);
+            deck1.AddCards(6, 2);
+            deck1.AddCards(7, 1);
+            deck1.AddCards(9, 1);
+
+            PlayerDeck deck2 = new PlayerDeck();
+            deck2.AddCards(1, 2);
+            deck2.AddCards(5, 3);
+            deck2.AddCards(6, 1);
+            deck2.AddCards(7, 2);
+            deck2.AddCards(9, 2);
+
+            Game game = new Game(1, 1, deck1, deck2,f);
             game.Clients.Add(new LocalConsoleClient());
             game.Clients.Add(new LocalConsoleClient());
+            
+            game.Start(null);
 
             Card foot = new Card
             {
@@ -36,6 +50,6 @@ namespace MagicWarCG
 
             GameAction.PlayCard(game, c);
             GameAction.PlayCard(game, sp);
-        }
+         }
     }
 }

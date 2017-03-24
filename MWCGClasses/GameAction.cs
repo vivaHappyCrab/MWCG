@@ -1,5 +1,6 @@
 ﻿using MWCGClasses.InGame;
 using MWCGClasses.GameObjects;
+using System;
 
 namespace MWCGClasses
 {
@@ -47,6 +48,11 @@ namespace MWCGClasses
                 foreach (Artifact art in p.Field.Face.Arts)
                     art?.OnSpellCastStart?.Invoke(game, spell);
             }
+        }
+
+        public static void OnDrawCard(Game game, Card card)
+        {
+            throw new NotImplementedException();
         }
 
         private static void OnSpellStartedCast(Game game, Spell spell)
