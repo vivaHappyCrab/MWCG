@@ -10,7 +10,15 @@ namespace MWCGClasses
     {
         public static void PlayCard(Game game, Card card)
         {
-            //todo:убрать из руки и вычесть ману на затраты
+            if (card == null)
+                return;
+            if (game == null)
+                throw new ArgumentNullException(nameof(game));
+            if (card.ManaCost > game.Players[card.Owner].Mana)
+                return;
+            if (!game.Players[card.Owner].Hand.Contains(card))
+                return;
+
             switch (card.Type)
             {
                 case CardType.Permanent:
@@ -25,12 +33,12 @@ namespace MWCGClasses
                 case CardType.Spell:
                     {
                         //CreateAction(opponent,PlayAnswer);
-                        Spell spell = game.Factory.GetObjectToPlayer(card.EntityId,game.Players[card.Owner])as Spell;
+                        Spell spell = game.Factory.GetObjectToPlayer(card.EntityId, game.Players[card.Owner]) as Spell;
                         OnSpellStartedCast(game, spell);
-                        if(spell==null)return;
+                        if (spell == null) return;
                         Event ev = game.Factory.GetEventById(spell.Effect);
                         ev.Invoke(game, spell);
-                        OnSpellCompletedCast(game, spell);  
+                        OnSpellCompletedCast(game, spell);
                         break;
                     }
             }

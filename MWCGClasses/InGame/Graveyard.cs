@@ -10,8 +10,8 @@ namespace MWCGClasses.InGame
 
         public Graveyard()
         {
-            Graves = new List<GameObject>();
-            Exiles = new List<GameObject>();
+            this.Graves = new List<GameObject>();
+            this.Exiles = new List<GameObject>();
         }
     }
 }

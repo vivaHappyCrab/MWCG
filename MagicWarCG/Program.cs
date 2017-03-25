@@ -35,8 +35,8 @@ namespace MagicWarCG
             #endregion
 
             Game game = new Game(1, 1, deck1, deck2, f);
-            game.Clients.Add(new LocalConsoleClient());
-            game.Clients.Add(new LocalConsoleClient());
+            game.Clients.Add(new LocalConsoleClient(0));
+            game.Clients.Add(new LocalConsoleClient(1));
 
             game.Start(null);
 
@@ -49,12 +49,8 @@ namespace MagicWarCG
             };
 
             foot.Races[0] = 1;
-
-            Card c = f.GetCardById(1);
-            Card sp = f.GetCardToPlayer(5, 0);
-
-            GameAction.PlayCard(game, c);
-            GameAction.PlayCard(game, sp);
+            
+             
         }
     }
 }

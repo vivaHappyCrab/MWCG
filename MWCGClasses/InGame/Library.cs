@@ -42,14 +42,14 @@ namespace MWCGClasses.InGame
         {
             Random rnd = new Random();
             List<Card> newLib = new List<Card>();
-            while(_cards.Count>0)
+            while(this._cards.Count>0)
             {
-                int n = rnd.Next(_cards.Count);
-                Card c = _cards[n];
-                _cards.Remove(c);
+                int n = rnd.Next(this._cards.Count);
+                Card c = this._cards[n];
+                this._cards.Remove(c);
                 newLib.Add(c);
             }
-            _cards = newLib;
+            this._cards = newLib;
         }
 
         /// <summary>
@@ -59,11 +59,17 @@ namespace MWCGClasses.InGame
         /// <returns>Карту из библиотеки с заданным номером. Если взятие карты не возможно - вернёт null.</returns>
         public Card DrawCard(int cardnum)
         {
-            if (cardnum >= _cards.Count) return null;
+            if (cardnum >= this._cards.Count) return null;
 
-            Card drawed = _cards[cardnum];
-            _cards.Remove(drawed);
+            Card drawed = this._cards[cardnum];
+            this._cards.Remove(drawed);
             return drawed;
         }
+
+        #region Properties
+
+        public int Count => this._cards.Count;
+
+        #endregion
     }
 }

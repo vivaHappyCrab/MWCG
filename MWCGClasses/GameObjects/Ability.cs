@@ -10,8 +10,8 @@ namespace MWCGClasses.GameObjects
 
         public Ability(int cardback,int id, int effect,int cost, bool active, string name, string desc) : base(cardback, effect, id, name, desc, ObjectType.Ability)
         {
-            Cost = cost;
-            Active = active;
+            this.Cost = cost;
+            this.Active = active;
         }
     }
 }

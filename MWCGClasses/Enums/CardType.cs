@@ -4,7 +4,6 @@
     {
         Permanent=0,
         Spell=1,
-        Instant=2,
-        Artefact=3, 
+        Artefact=2, 
     };
 }

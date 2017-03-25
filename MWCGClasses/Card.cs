@@ -30,7 +30,7 @@
 
         internal Card GetCopy()
         {
-            return MemberwiseClone() as Card;
+            return this.MemberwiseClone() as Card;
         }
 
         public int Owner { get; set; }

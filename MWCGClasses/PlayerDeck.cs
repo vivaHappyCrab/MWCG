@@ -20,7 +20,7 @@ namespace MWCGClasses
         /// </summary>
         public PlayerDeck()
         {
-            Composition=new Dictionary<int, int>();
+            this.Composition=new Dictionary<int, int>();
         } 
 
         /// <summary>
@@ -32,10 +32,10 @@ namespace MWCGClasses
         public bool AddCards(int cardId, int amount=1)
         {
             //todo: validation
-            if (Composition.ContainsKey(cardId))
-                Composition[cardId] += amount;
+            if (this.Composition.ContainsKey(cardId))
+                this.Composition[cardId] += amount;
             else
-                Composition.Add(cardId, amount);
+                this.Composition.Add(cardId, amount);
 
             return true;
         }

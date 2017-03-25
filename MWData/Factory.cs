@@ -18,19 +18,19 @@ namespace MWData
         public GameObject GetObjectById(int id)
         {
             if (id <= 0) return null;
-            GameObject o = _objectsLibrary.First(x => x.ObjectNum == id).GetCopy();
+            GameObject o = this._objectsLibrary.First(x => x.ObjectNum == id).GetCopy();
 
             if (o == null) return null;
-            o.Id = _objId++;
+            o.Id = this._objId++;
             return o;
         }
 
         public Hero GetHeroByRace(int id)
         {
-            Hero h = GetObjectById(_raceLibrary.First(x => x.RaceId == id).HeroId) as Hero;
+            Hero h = this.GetObjectById(this._raceLibrary.First(x => x.RaceId == id).HeroId) as Hero;
 
             if (h == null) return null;
-            h.Id = _objId++;
+            h.Id = this._objId++;
             return h;
         }
 
@@ -38,7 +38,7 @@ namespace MWData
         {
             try
             {
-                return _eventMap[effect];
+                return this._eventMap[effect];
             }
             catch
             {
@@ -50,10 +50,10 @@ namespace MWData
         {
             try
             {
-                Card c = _cardLibrary.First(x => x.CardId == id).GetCopy();
+                Card c = this._cardLibrary.First(x => x.CardId == id).GetCopy();
 
                 if (c == null) return null;
-                c.Id = _cardId++;
+                c.Id = this._cardId++;
                 return c;
             }
             catch
@@ -64,24 +64,24 @@ namespace MWData
 
         public GameObject GetObjectToPlayer(int id, Player player)
         {
-            GameObject res = GetObjectById(id);
+            GameObject res = this.GetObjectById(id);
             res.Owner = player;
             return res;
         }
 
         public Card GetCardToPlayer(int id, int playerNum)
         {
-            Card res = GetCardById(id);
+            Card res = this.GetCardById(id);
             res.Owner = playerNum;
             return res;
         }
 
         public void InitLibs()
         {
-            _cardLibrary = DataAccessor.GetCardList();
-            _objectsLibrary = DataAccessor.GetObjectList();
-            _raceLibrary = DataAccessor.GetRaceList();
-            _eventMap = InitEvents();
+            this._cardLibrary = DataAccessor.GetCardList();
+            this._objectsLibrary = DataAccessor.GetObjectList();
+            this._raceLibrary = DataAccessor.GetRaceList();
+            this._eventMap = InitEvents();
         }
 
         private static List<Event> InitEvents()

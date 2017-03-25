@@ -8,17 +8,17 @@ namespace MWCGClasses.GameObjects
         #region Game(...)
         public GameObject(int cardback, int id, ObjectType otype, string name, string desc)
         {
-            BackCard = cardback;
-            MaxHealth = Health = -1;
-            ObjectNum = id;
-            OType = otype;
-            Name = name;
-            Description = desc;
+            this.BackCard = cardback;
+            this.MaxHealth = this.Health = -1;
+            this.ObjectNum = id;
+            this.OType = otype;
+            this.Name = name;
+            this.Description = desc;
         }
 
         public GameObject GetCopy()
         {
-            return MemberwiseClone() as GameObject;
+            return this.MemberwiseClone() as GameObject;
         }
 
         #endregion
@@ -27,10 +27,10 @@ namespace MWCGClasses.GameObjects
         {
             if (dmg > 0)
             {
-                Health = Health - dmg;
+                this.Health = this.Health - dmg;
                 g.ObjectTakesDamage(this);
             }
-            if (Health < 0)
+            if (this.Health < 0)
                 g.KillObject(this);
 
         }

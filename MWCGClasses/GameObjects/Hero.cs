@@ -7,12 +7,12 @@ namespace MWCGClasses.GameObjects
         public Hero(int cardback,int id, string name, string desc, int hp, int ability) : 
             base(cardback,id,ObjectType.Hero, name, desc)
         {
-            MaxHealth = Health = hp;
-            Default = ability;
-            Arts = new Artifact[3];
+            this.MaxHealth = this.Health = hp;
+            this.Default = ability;
+            this.Arts = new Artifact[3];
             //Arts[2] = Factory.GetObjectById(ability)as Artifact; TODO IN GAME INIT
-            Attack = 0;
-            CanAttack = false;
+            this.Attack = 0;
+            this.CanAttack = false;
         }
 
         public Artifact[] Arts {get;set;}
