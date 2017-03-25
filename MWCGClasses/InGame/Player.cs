@@ -29,8 +29,8 @@ namespace MWCGClasses.InGame
                 case ObjectType.Creature:
                     Field.Units.Remove(obj as Unit);
                     Graves.Graves.Add(obj);
-
                     break;
+
                 case ObjectType.Support:
                     Field.Supports.Remove(obj as Support);
                     Graves.Graves.Add(obj);

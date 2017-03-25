@@ -1,13 +1,5 @@
 ﻿namespace MWCGClasses
 {
-    public enum CardType
-    {
-        Permanent=0,
-        Spell=1,
-        Instant=2,
-        Artefact=3, 
-    };
-
     public enum RareType
     {
         Base=0,
@@ -22,7 +14,7 @@
 
         public int[] Races { get; set; }
 
-        public CardType Type { get; set; }
+        public Enums.CardType Type { get; set; }
 
         public int EntityId { get; set; }
 

@@ -86,7 +86,7 @@ namespace MWData
 
         private static List<Event> InitEvents()
         {
-            List<Event> result = new List<Event> {SpellAction.FireBall};
+            List<Event> result = new List<Event> { SpellAction.FireBall, EnterBf.YouthBerserkBc };
             return result;
         }
     }

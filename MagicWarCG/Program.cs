@@ -2,6 +2,7 @@
 using MWCGClasses.InGame;
 using MWData;
 using MWCGClasses.ClientInterface;
+using MWCGClasses.Enums;
 
 namespace MagicWarCG
 {
@@ -12,10 +13,12 @@ namespace MagicWarCG
             Factory f = new Factory();
             f.InitLibs();
 
-            if(args.Length!=0)
+            if (args.Length != 0)
                 return;
 
-            PlayerDeck deck1=new PlayerDeck();
+            #region Create Test decks
+
+            PlayerDeck deck1 = new PlayerDeck();
             deck1.AddCards(1, 4);
             deck1.AddCards(5, 2);
             deck1.AddCards(6, 2);
@@ -29,10 +32,12 @@ namespace MagicWarCG
             deck2.AddCards(7, 2);
             deck2.AddCards(9, 2);
 
-            Game game = new Game(1, 1, deck1, deck2,f);
+            #endregion
+
+            Game game = new Game(1, 1, deck1, deck2, f);
             game.Clients.Add(new LocalConsoleClient());
             game.Clients.Add(new LocalConsoleClient());
-            
+
             game.Start(null);
 
             Card foot = new Card
@@ -46,10 +51,10 @@ namespace MagicWarCG
             foot.Races[0] = 1;
 
             Card c = f.GetCardById(1);
-            Card sp = f.GetCardToPlayer(5,0);
+            Card sp = f.GetCardToPlayer(5, 0);
 
             GameAction.PlayCard(game, c);
             GameAction.PlayCard(game, sp);
-         }
+        }
     }
 }

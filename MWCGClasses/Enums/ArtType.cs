@@ -1,4 +1,4 @@
-﻿namespace MWCGClasses.GameObjects
+﻿namespace MWCGClasses.Enums
 {
     public enum ArtType
     {

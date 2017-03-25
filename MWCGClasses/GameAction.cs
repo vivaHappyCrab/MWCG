@@ -1,6 +1,7 @@
 ﻿using MWCGClasses.InGame;
 using MWCGClasses.GameObjects;
 using System;
+using MWCGClasses.Enums;
 
 namespace MWCGClasses
 {
