@@ -46,10 +46,10 @@ namespace MWCGClasses.InGame
         {
             this.Players = new List<Player>();
             this.Factory = f;
-            Library lib = new Library(deck1, this);
+            Library lib = new Library(deck1, this,0);
             this.Players.Add(new Player(race1, lib, 0, this));
 
-            lib = new Library(deck2, this);
+            lib = new Library(deck2, this,1);
             this.Players.Add(new Player(race2, lib, 1, this));
 
             foreach (Player p in this.Players)
@@ -104,29 +104,45 @@ namespace MWCGClasses.InGame
 
         public void MainPhase(Player player, int turn)
         {
-            player.MaxMana++;
-            player.Mana = player.MaxMana;
-
-            bool endPhase = true;
-
-            while (endPhase)
+            while (true)
             {
-                List<int> targets = player.Hand.Select(card => card.Id).ToList();
-                Answer ans = this.Clients[player.Num].CreateAction(ActionType.HandCard, targets);
-                switch (ans.ActionType)
+                if(player.MaxMana<12)
+                    player.MaxMana++;
+                player.Mana = player.MaxMana;
+
+                GameAction.OnTurnStart(this, player);
+                this.DrawCards(player);
+
+                bool endPhase = true;
+
+                while (endPhase)
                 {
-                    case ActionType.HandCard:
-                        GameAction.PlayCard(this, player.Hand.First(card => card.Id == ans.Target));
-                        break;
+                    List<int> targets = player.Hand.Select(card => card.Id).ToList();
+                    Answer ans = this.Clients[player.Num].CreateAction(ActionType.HandCard, targets);
+                    switch (ans.ActionType)
+                    {
+                        case ActionType.HandCard:
+                            GameAction.PlayCard(this, player.Hand.First(card => card.Id == ans.Target));
+                            break;
 
-                    case ActionType.Skip:
-                        endPhase = false;
-                        break;
+                        case ActionType.Skip:
+                            endPhase = false;
+                            break;
 
-                    default:
-                        break;
+                        default:
+                            break;
+                    }
                 }
-
+                if (player.Num + 1 == this.Players.Count)
+                {
+                    player = this.Players[0];
+                    turn = ++this._turnCount;
+                }
+                else
+                {
+                    player = this.Players[player.Num + 1];
+                    turn = this._turnCount;
+                }
             }
         }
 

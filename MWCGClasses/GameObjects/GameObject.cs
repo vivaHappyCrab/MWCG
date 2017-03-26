@@ -30,7 +30,7 @@ namespace MWCGClasses.GameObjects
                 this.Health = this.Health - dmg;
                 g.ObjectTakesDamage(this);
             }
-            if (this.Health < 0)
+            if (this.Health <= 0)
                 g.KillObject(this);
 
         }
@@ -53,6 +53,10 @@ namespace MWCGClasses.GameObjects
         public Event OnSpellCastStart { get; set; }
 
         public Event OnSpellCastCompleted { get; set; }
+
+        public PlayerEvent OnTurnStart { get; set; }
+
+        public CardEvent OnDrawCard { get; set; }
         #endregion
 
         #region Props

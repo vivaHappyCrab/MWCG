@@ -6,6 +6,10 @@ using MWCGClasses.Enums;
 namespace MWCGClasses
 {
     public delegate void Event(Game g, GameObject obj);
+
+    public delegate void PlayerEvent(Game g, Player player);
+
+    public delegate void CardEvent(Game g, Card card);
     public class GameAction
     {
         public static void PlayCard(Game game, Card card)
@@ -18,6 +22,9 @@ namespace MWCGClasses
                 return;
             if (!game.Players[card.Owner].Hand.Contains(card))
                 return;
+
+            game.Players[card.Owner].Mana -= card.ManaCost;
+            game.Players[card.Owner].Hand.Remove(card);
 
             switch (card.Type)
             {
@@ -61,7 +68,15 @@ namespace MWCGClasses
 
         public static void OnDrawCard(Game game, Card card)
         {
-            throw new NotImplementedException();
+            foreach (Player p in game.Players)
+            {
+                foreach (Unit un in p.Field.Units)
+                    un.OnDrawCard?.Invoke(game, card);
+                foreach (Support sup in p.Field.Supports)
+                    sup.OnDrawCard?.Invoke(game, card);
+                foreach (Artifact art in p.Field.Face.Arts)
+                    art?.OnDrawCard?.Invoke(game, card);
+            }
         }
 
         private static void OnSpellStartedCast(Game game, Spell spell)
@@ -99,7 +114,20 @@ namespace MWCGClasses
                 foreach (Support sup in p.Field.Supports)
                     sup.OnTakeDamage?.Invoke(game, obj);
                 foreach (Artifact art in p.Field.Face.Arts)
-                    art?.OnEnter?.Invoke(game, obj);
+                    art?.OnTakeDamage?.Invoke(game, obj);
+            }
+        }
+
+        public static void OnTurnStart(Game game, Player player)
+        {
+            foreach (Player p in game.Players)
+            {
+                foreach (Unit un in p.Field.Units)
+                    un.OnTurnStart?.Invoke(game, player);
+                foreach (Support sup in p.Field.Supports)
+                    sup.OnTurnStart?.Invoke(game, player);
+                foreach (Artifact art in p.Field.Face.Arts)
+                    art?.OnTurnStart?.Invoke(game, player);
             }
         }
 

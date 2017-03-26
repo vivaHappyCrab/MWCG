@@ -21,7 +21,7 @@ namespace MWCGClasses.InGame
         /// <summary>
         /// Конструктор пустой библиотеки.
         /// </summary>
-        public Library(PlayerDeck deck,Game g)
+        public Library(PlayerDeck deck,Game g,int owner)
         {
             if(deck==null)
                 return;
@@ -30,8 +30,12 @@ namespace MWCGClasses.InGame
 
             foreach (KeyValuePair<int, int> pair in deck.Composition)
             {
-                for(int i=0;i<pair.Value;++i)
-                    this._cards.Add(g.Factory.GetCardById(pair.Key));
+                for (int i = 0; i < pair.Value; ++i)
+                {
+                    Card card = g.Factory.GetCardById(pair.Key);
+                    card.Owner = owner;
+                    this._cards.Add(card);
+                }
             }
         }
 

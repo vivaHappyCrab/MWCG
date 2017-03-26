@@ -88,8 +88,15 @@ namespace MWCGClasses.ClientInterface
             Console.WriteLine();
             while (true)
             {
+                string s = Console.ReadLine();
+                if(s=="")
+                    return new Answer()
+                    {
+                        ActionType = ActionType.Skip,
+                        Target = 0
+                    };
                 int n;
-                if (!int.TryParse(Console.ReadLine(), out n)) n = -1;
+                if (!int.TryParse(s, out n)) n = -1;
                 if (!targets.Select(x => x == n).Any()) continue;
                 Answer a = new Answer
                 {
