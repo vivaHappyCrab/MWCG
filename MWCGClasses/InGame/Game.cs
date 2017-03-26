@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using MWCGClasses.GameObjects;
 using MWData;
@@ -88,7 +89,7 @@ namespace MWCGClasses.InGame
                 client.GetGameState(this);
 
             this._turnCount=1;
-            this.MainPhase(this.Players[firstPlayer], this._turnCount);
+            this.GameCycle(this.Players[firstPlayer], this._turnCount);
         }
 
         public void DrawCards(Player player, int amount = 1)
@@ -102,7 +103,7 @@ namespace MWCGClasses.InGame
             }
         }
 
-        public void MainPhase(Player player, int turn)
+        public void GameCycle(Player player, int turn)
         {
             while (true)
             {
@@ -113,26 +114,9 @@ namespace MWCGClasses.InGame
                 GameAction.OnTurnStart(this, player);
                 this.DrawCards(player);
 
-                bool endPhase = true;
+                this.MainPhase(player);
+                this.AttackPhase(player);
 
-                while (endPhase)
-                {
-                    List<int> targets = player.Hand.Select(card => card.Id).ToList();
-                    Answer ans = this.Clients[player.Num].CreateAction(ActionType.HandCard, targets);
-                    switch (ans.ActionType)
-                    {
-                        case ActionType.HandCard:
-                            GameAction.PlayCard(this, player.Hand.First(card => card.Id == ans.Target));
-                            break;
-
-                        case ActionType.Skip:
-                            endPhase = false;
-                            break;
-
-                        default:
-                            break;
-                    }
-                }
                 if (player.Num + 1 == this.Players.Count)
                 {
                     player = this.Players[0];
@@ -142,6 +126,66 @@ namespace MWCGClasses.InGame
                 {
                     player = this.Players[player.Num + 1];
                     turn = this._turnCount;
+                }
+            }
+        }
+
+        public void MainPhase(Player player)
+        {
+            bool endPhase = true;
+
+            while (endPhase)
+            {
+                List<int> targets = player.Hand.Select(card => card.Id).ToList();
+                if(!targets.Any())return;
+
+                Answer ans = this.Clients[player.Num].CreateAction(ActionType.HandCard, targets,"choose card to play");
+                switch (ans.ActionType)
+                {
+                    case ActionType.HandCard:
+                        GameAction.PlayCard(this, player.Hand.First(card => card.Id == ans.Target));
+                        break;
+
+                    case ActionType.Skip:
+                        endPhase = false;
+                        break;
+                }
+            }
+        }
+
+        public void AttackPhase(Player player)
+        {
+            bool endPhase = true;
+
+            List<int> targets = new List<int>();
+            foreach (Player opp in this.Players.Where(opp => opp != player))
+            {
+                targets.AddRange(opp.Field.Supports.Select(sup => sup.Id));
+                targets.AddRange(opp.Field.Units.Select(unit => unit.Id));
+                targets.Add(opp.Field.Face.Id);
+            }
+
+            List<int> actors = player.Field.Units.Select(unit => unit.Id).ToList();
+
+            List<Tuple<int,int>> pairs =new List<Tuple<int, int>>();
+
+            if(!actors.Any()||!targets.Any())return;
+
+            while (endPhase)
+            {
+                Answer ans = this.Clients[player.Num].CreateAction(ActionType.Attack, actors, targets, "choose pair 2 attack");
+                switch (ans.ActionType)
+                {
+                    case ActionType.Attack:
+                        pairs.Add(ans.Pair);
+                        actors.Remove(ans.Pair.Item1);
+                        if (!actors.Any())
+                            endPhase = false;
+                        break;
+
+                    case ActionType.Skip:
+                        endPhase = false;
+                        break;
                 }
             }
         }

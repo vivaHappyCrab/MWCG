@@ -76,16 +76,17 @@ namespace MWCGClasses.ClientInterface
             #endregion
         }
 
-        public Answer CreateAction(ActionType type, List<int> targets)
+        public Answer CreateAction(ActionType type, List<int> targets,string message=null)
         {
             Console.Clear();
             this.DrawGame();
             
-            Console.Write("Your actions:");
+            Console.WriteLine("You must {0}; Your actions:",message);
             if(type==ActionType.HandCard)
                 foreach (int target in targets)
-                    Console.Write("{1}({0});", target,this._game.Players[this._yourNum].Hand.First(card => card.Id==target)?.Name);
+                    Console.Write("{1}({0});", target,this._game.Players[this._yourNum].Hand.FirstOrDefault(card => card.Id==target)?.Name);
             Console.WriteLine();
+
             while (true)
             {
                 string s = Console.ReadLine();
@@ -104,6 +105,67 @@ namespace MWCGClasses.ClientInterface
                     Target = n
                 };
                 return a;
+            }
+        }
+
+        public Answer CreateAction(ActionType type, List<int> actors, List<int> targets, string message = null)
+        {
+            Console.Clear();
+            this.DrawGame();
+            if (type == ActionType.Attack)
+            {
+                Console.WriteLine("You must {0}; Choose attacker:", message);
+                foreach (int actor in actors)
+                    Console.Write("{1}({0});", actor,
+                        this._game.Players[this._yourNum].Field.Units.FirstOrDefault(unit => unit.Id == actor)?.Name);
+                Console.WriteLine();
+
+                while (true)
+                {
+                    string s = Console.ReadLine();
+                    if (s == "")
+                        return new Answer()
+                        {
+                            ActionType = ActionType.Skip,
+                            Target = 0
+                        };
+                    int n;
+                    if (!int.TryParse(s, out n)) n = -1;
+                    if (!actors.Select(x => x == n).Any()) continue;
+
+                    Console.WriteLine("Choose defender:");
+                    foreach (int target in targets)
+                    {
+                        Console.Write("{1}{2}{3}({0});", target,
+                            this._game.Players[this._enemyNum].Field.Units.FirstOrDefault(unit => unit.Id == target)?.Name,
+                            this._game.Players[this._enemyNum].Field.Supports.FirstOrDefault(supp => supp.Id == target)?.Name,
+                            this._game.Players[this._enemyNum].Field.Face.Id==target? this._game.Players[this._enemyNum].Field.Face.Name:null);
+                    }
+                    Console.WriteLine();
+
+                    s = Console.ReadLine();
+                    if (s == "")
+                        return new Answer()
+                        {
+                            ActionType = ActionType.Skip,
+                            Target = 0
+                        };
+                    int targ;
+                    if (!int.TryParse(s, out targ)) targ = -1;
+                    if (!targets.Select(x => x == targ).Any()) continue;
+
+                    Answer a = new Answer
+                    {
+                        ActionType = type,
+                        Target = n,
+                        Pair = new Tuple<int, int>(n, targ)
+                    };
+                    return a;
+                }
+            }
+            else
+            {
+                return new Answer();
             }
         }
 

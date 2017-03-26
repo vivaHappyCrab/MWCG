@@ -136,11 +136,11 @@ namespace MWCGClasses
             foreach (Player p in game.Players)
             {
                 foreach (Unit un in p.Field.Units)
-                    un.OnDeath?.Invoke(game, obj);
+                    un.OnPermDeath?.Invoke(game, obj);
                 foreach (Support sup in p.Field.Supports)
-                    sup.OnDeath?.Invoke(game, obj);
+                    sup.OnPermDeath?.Invoke(game, obj);
                 foreach (Artifact art in p.Field.Face.Arts)
-                    art?.OnDeath?.Invoke(game, obj);
+                    art?.OnPermDeath?.Invoke(game, obj);
             }
         }
         #endregion

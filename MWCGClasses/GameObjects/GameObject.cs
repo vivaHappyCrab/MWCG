@@ -36,10 +36,25 @@ namespace MWCGClasses.GameObjects
         }
 
         #region Events
+
+        /// <summary>
+        /// Вызывается при призыве этого объекта из руки.
+        /// </summary>
         public Event OnSummon { get; set; }
 
+        /// <summary>
+        /// Вызвается при появлении другого нового объекта на поле.
+        /// </summary>
         public Event OnEnter { get; set; }
 
+        /// <summary>
+        /// Вызвается при смерти другого объекта.
+        /// </summary>
+        public Event OnPermDeath { get; set; }
+        
+        /// <summary>
+        /// Вызывается при смерти самого объекта.
+        /// </summary>
         public Event OnDeath { get; set; }
 
         public Event OnRemove { get; set; }
@@ -55,6 +70,8 @@ namespace MWCGClasses.GameObjects
         public Event OnSpellCastCompleted { get; set; }
 
         public PlayerEvent OnTurnStart { get; set; }
+
+        public PlayerEvent OnTurnEnd { get; set; }
 
         public CardEvent OnDrawCard { get; set; }
         #endregion
