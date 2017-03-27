@@ -10,6 +10,7 @@ namespace MWCGClasses
     public delegate void PlayerEvent(Game g, Player player);
 
     public delegate void CardEvent(Game g, Card card);
+
     public class GameAction
     {
         public static void PlayCard(Game game, Card card)

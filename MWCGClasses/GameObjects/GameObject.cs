@@ -5,7 +5,8 @@ namespace MWCGClasses.GameObjects
 {
     public class GameObject
     {
-        #region Game(...)
+        #region GameObject(...)
+
         public GameObject(int cardback, int id, ObjectType otype, string name, string desc)
         {
             this.BackCard = cardback;
@@ -123,6 +124,9 @@ namespace MWCGClasses.GameObjects
         /// Описание объекта
         /// </summary>
         public string Description { get; set; }
+
+        public bool Activated { get; set; } = false;
+
         #endregion
     }
 }

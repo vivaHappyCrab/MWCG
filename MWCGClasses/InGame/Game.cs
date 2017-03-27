@@ -47,10 +47,10 @@ namespace MWCGClasses.InGame
         {
             this.Players = new List<Player>();
             this.Factory = f;
-            Library lib = new Library(deck1, this,0);
+            Library lib = new Library(deck1, this, 0);
             this.Players.Add(new Player(race1, lib, 0, this));
 
-            lib = new Library(deck2, this,1);
+            lib = new Library(deck2, this, 1);
             this.Players.Add(new Player(race2, lib, 1, this));
 
             foreach (Player p in this.Players)
@@ -88,7 +88,7 @@ namespace MWCGClasses.InGame
             foreach (IClient client in this.Clients)
                 client.GetGameState(this);
 
-            this._turnCount=1;
+            this._turnCount = 1;
             this.GameCycle(this.Players[firstPlayer], this._turnCount);
         }
 
@@ -107,7 +107,7 @@ namespace MWCGClasses.InGame
         {
             while (true)
             {
-                if(player.MaxMana<12)
+                if (player.MaxMana < 12)
                     player.MaxMana++;
                 player.Mana = player.MaxMana;
 
@@ -130,6 +130,10 @@ namespace MWCGClasses.InGame
             }
         }
 
+        /// <summary>
+        /// Основная фаза, в которрой доступен розыгрыш заклинаний и каст способностей юнитов, не имеющих статус мгновенной.
+        /// </summary>
+        /// <param name="player"></param>
         public void MainPhase(Player player)
         {
             bool endPhase = true;
@@ -137,9 +141,9 @@ namespace MWCGClasses.InGame
             while (endPhase)
             {
                 List<int> targets = player.Hand.Select(card => card.Id).ToList();
-                if(!targets.Any())return;
+                if (!targets.Any()) return;
 
-                Answer ans = this.Clients[player.Num].CreateAction(ActionType.HandCard, targets,"choose card to play");
+                Answer ans = this.Clients[player.Num].CreateAction(ActionType.HandCard, targets, "choose card to play");
                 switch (ans.ActionType)
                 {
                     case ActionType.HandCard:
@@ -153,6 +157,10 @@ namespace MWCGClasses.InGame
             }
         }
 
+        /// <summary>
+        /// Фаза выбора атакующих существ.
+        /// </summary>
+        /// <param name="player">Атакующий игрок.</param>
         public void AttackPhase(Player player)
         {
             bool endPhase = true;
@@ -167,13 +175,13 @@ namespace MWCGClasses.InGame
 
             List<int> actors = player.Field.Units.Select(unit => unit.Id).ToList();
 
-            List<Tuple<int,int>> pairs =new List<Tuple<int, int>>();
+            List<Tuple<int, int>> pairs = new List<Tuple<int, int>>();
 
-            if(!actors.Any()||!targets.Any())return;
+            if (!actors.Any() || !targets.Any()) return;
 
             while (endPhase)
             {
-                Answer ans = this.Clients[player.Num].CreateAction(ActionType.Attack, actors, targets, "choose pair 2 attack");
+                Answer ans = this.Clients[player.Num].CreateAction(ActionType.Attack, actors, targets, "choose pair to attack");
                 switch (ans.ActionType)
                 {
                     case ActionType.Attack:
@@ -188,6 +196,58 @@ namespace MWCGClasses.InGame
                         break;
                 }
             }
+
+            List<Tuple<int, int>> defenders = this.DefendPhase(player, pairs);
+        }
+
+        /// <summary>
+        /// Фаза блокировки атакующих существ противника.
+        /// </summary>
+        /// <param name="attacker">Атакующий игрок.</param>
+        /// <param name="pairs">Пары атакующий-цель.</param>
+        /// <returns>Пары защищающий-атакующий.</returns>
+        public List<Tuple<int, int>> DefendPhase(Player attacker, List<Tuple<int, int>> pairs)
+        {
+            List<Tuple<int, int>> result = new List<Tuple<int, int>>();
+
+            foreach (Player player in this.Players)
+            {
+                if (player == attacker) continue;
+                List<int> actors =
+                    player.Field.Units.Where(unit => !this.ListOfPairsContains(pairs, unit.Id)) //Юнит не должен быть в списке атакуемых.
+                        .Select(unit => unit.Id)
+                        .ToList();
+                if (!actors.Any()) continue;
+
+                List<int> targets = 
+                    pairs.Where(pair => this._objects[pair.Item2].Owner == player)  //Доступные цели выбираются из тех, которые атакуют ваших юнитов.
+                        .Select(pair => pair.Item1)
+                        .ToList();
+                if (!targets.Any()) continue;
+
+                bool endPhase = true;
+
+                while (endPhase)
+                {
+                    Answer ans = this.Clients[player.Num].CreateAction(ActionType.Attack, actors, targets,
+                        "choose pair to defend");
+
+                    switch (ans.ActionType)
+                    {
+                        case ActionType.Attack:
+                            result.Add(ans.Pair);
+                            actors.Remove(ans.Pair.Item1);
+                            if (!actors.Any())
+                                endPhase = false;
+                            break;
+
+                        case ActionType.Skip:
+                            endPhase = false;
+                            break;
+                    }
+                }
+            }
+            return result;
         }
 
         /// <summary>
@@ -250,6 +310,28 @@ namespace MWCGClasses.InGame
             GameObject obj = this.Factory.GetObjectById(id);
             this._objects.Add(obj.Id, obj);
             return obj;
+        }
+
+        #endregion
+
+        #region Private methods
+
+        private bool ListOfPairsContains(List<Tuple<int, int>> list, int target, bool first = false)
+        {
+            foreach (Tuple<int, int> pair in list)
+            {
+                if (first)
+                {
+                    if (target == pair.Item1)
+                        return true;
+                }
+                else
+                {
+                    if (target == pair.Item2)
+                        return true;
+                }
+            }
+            return false;
         }
 
         #endregion

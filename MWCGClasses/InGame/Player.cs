@@ -13,7 +13,9 @@ namespace MWCGClasses.InGame
             this.Race = race;
             this.Deck = deck;
             this.Num = num;
-            this.Field = new BattleField(race,g);
+
+            this.Field = new BattleField(race, g) {Face = {Owner = this}};
+
             this.Hand = new List<Card>();
             this.Graves = new Graveyard();
         }
