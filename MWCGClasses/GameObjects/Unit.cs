@@ -1,4 +1,6 @@
-﻿using MWCGClasses.Enums;
+﻿using System;
+using MWCGClasses.Enums;
+using MWCGClasses.InGame;
 
 namespace MWCGClasses.GameObjects
 {
@@ -10,6 +12,22 @@ namespace MWCGClasses.GameObjects
         {
             this.Attack = attack;
             this.MaxHealth = this.Health = hp;
+        }
+
+        public void DealDamage(Game game, GameObject target,int amount)
+        {
+            if(game==null)
+                throw new ArgumentNullException(nameof(game));
+
+            if(target==null)
+                return;
+
+            if (amount > this.Attack)
+                return;
+            if (amount==0)return;
+
+            GameAction.OnObjectDealsDamage(game, this);
+            target.TakeDamage(game,amount,DamageType.Physical);
         }
     }
 }

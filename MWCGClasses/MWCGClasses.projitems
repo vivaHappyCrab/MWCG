@@ -15,6 +15,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)ClientInterface\LocalConsoleClient.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Enums\ArtType.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Enums\CardType.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Enums\DamageType.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Enums\Keyword.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Enums\ObjectType.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)GameAction.cs" />

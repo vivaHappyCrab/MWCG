@@ -119,6 +119,19 @@ namespace MWCGClasses
             }
         }
 
+        public static void OnObjectDealsDamage(Game game, GameObject obj)
+        {
+            foreach (Player p in game.Players)
+            {
+                foreach (Unit un in p.Field.Units)
+                    un.OnDealDamage?.Invoke(game, obj);
+                foreach (Support sup in p.Field.Supports)
+                    sup.OnDealDamage?.Invoke(game, obj);
+                foreach (Artifact art in p.Field.Face.Arts)
+                    art?.OnDealDamage?.Invoke(game, obj);
+            }
+        }
+
         public static void OnTurnStart(Game game, Player player)
         {
             foreach (Player p in game.Players)

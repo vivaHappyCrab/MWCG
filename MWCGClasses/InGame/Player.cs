@@ -38,7 +38,7 @@ namespace MWCGClasses.InGame
                     break;
 
                 case ObjectType.Hero:
-                    //Win_Lose Event
+                    //todo: Win_Lose Event
                     break;
             }
         }

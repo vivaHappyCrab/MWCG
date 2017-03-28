@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using MWCGClasses.GameObjects;
-using MWData;
 using MWCGClasses.ClientInterface;
 using MWCGClasses.Enums;
+using MWCGClasses.GameObjects;
+using MWData;
 
 namespace MWCGClasses.InGame
 {
@@ -29,7 +29,7 @@ namespace MWCGClasses.InGame
         /// <summary>
         /// Номер хода.
         /// </summary>
-        private int _turnCount = 0;
+        private int _turnCount;
 
         #endregion
 
@@ -105,7 +105,7 @@ namespace MWCGClasses.InGame
 
         public void GameCycle(Player player, int turn)
         {
-            while (true)
+            while (true)//todo: Win-Lose condition
             {
                 if (player.MaxMana < 12)
                     player.MaxMana++;
@@ -198,6 +198,12 @@ namespace MWCGClasses.InGame
             }
 
             List<Tuple<int, int>> defenders = this.DefendPhase(player, pairs);
+
+            List<Tuple<int, List<int>>> combatPairs = TargetList(pairs, defenders);
+
+            //todo: Instant phase
+
+            this.DamagePhase(player, combatPairs);
         }
 
         /// <summary>
@@ -214,12 +220,12 @@ namespace MWCGClasses.InGame
             {
                 if (player == attacker) continue;
                 List<int> actors =
-                    player.Field.Units.Where(unit => !this.ListOfPairsContains(pairs, unit.Id)) //Юнит не должен быть в списке атакуемых.
+                    player.Field.Units.Where(unit => !ListOfPairsContains(pairs, unit.Id)) //Юнит не должен быть в списке атакуемых.
                         .Select(unit => unit.Id)
                         .ToList();
                 if (!actors.Any()) continue;
 
-                List<int> targets = 
+                List<int> targets =
                     pairs.Where(pair => this._objects[pair.Item2].Owner == player)  //Доступные цели выбираются из тех, которые атакуют ваших юнитов.
                         .Select(pair => pair.Item1)
                         .ToList();
@@ -249,6 +255,7 @@ namespace MWCGClasses.InGame
             }
             return result;
         }
+
 
         /// <summary>
         /// Удаление объекта с поля и вызов события 
@@ -316,7 +323,7 @@ namespace MWCGClasses.InGame
 
         #region Private methods
 
-        private bool ListOfPairsContains(List<Tuple<int, int>> list, int target, bool first = false)
+        private static bool ListOfPairsContains(IEnumerable<Tuple<int, int>> list, int target, bool first = false)
         {
             foreach (Tuple<int, int> pair in list)
             {
@@ -332,6 +339,54 @@ namespace MWCGClasses.InGame
                 }
             }
             return false;
+        }
+
+        /// <summary>
+        /// Получение целей для атакующих юнитов.
+        /// </summary>
+        /// <param name="attackers">Пары атакующий - цель.</param>
+        /// <param name="defenders">Пары защитник - атакующий.</param>
+        /// <returns>Пары атакующий - список его реальных целей.</returns>
+        private static List<Tuple<int, List<int>>> TargetList(IEnumerable<Tuple<int, int>> attackers, List<Tuple<int, int>> defenders)
+        {
+            List<Tuple<int, List<int>>> result = new List<Tuple<int, List<int>>>();
+            foreach (Tuple<int, int> item in attackers)
+            {
+                List<int> targets = defenders.Where(targ => targ.Item2 == item.Item1)
+                .Select(targ => targ.Item1)
+                .ToList();
+
+                if (!targets.Any())
+                    targets.Add(item.Item2);
+
+                result.Add(new Tuple<int, List<int>>(item.Item1, targets));
+            }
+
+            return result;
+        }
+
+        private void DamagePhase(Player player, IEnumerable<Tuple<int, List<int>>> combatPairs)
+        {
+            foreach (Tuple<int, List<int>> pair in combatPairs)
+            {
+                if (pair.Item2.Count < 2)
+                {
+                    Unit attacker = (this._objects[pair.Item1] as Unit);
+                    attacker?.DealDamage(this, this._objects[pair.Item2[0]], attacker.Attack);
+                    continue;
+                }
+                Unit unit = this._objects[pair.Item1] as Unit;
+                if (unit != null && unit.Attack >= pair.Item2.Select(x => this._objects[x].Health).Sum())
+                {
+                    foreach (int i in pair.Item2)
+                    {
+                        unit?.DealDamage(this, this._objects[pair.Item2[0]], this._objects[pair.Item2[0]].Health);
+                    }
+                    //todo:Add original target for trmaple
+                    continue;
+                }
+                //todo:Create action for chosing damages
+            }
         }
 
         #endregion

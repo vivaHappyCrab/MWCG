@@ -24,7 +24,7 @@ namespace MWCGClasses.GameObjects
 
         #endregion
 
-        public virtual void TakeDamage(int dmg, Game g)
+        public virtual void TakeDamage(Game g, int dmg, DamageType type)
         {
             if (dmg > 0)
             {
@@ -61,6 +61,8 @@ namespace MWCGClasses.GameObjects
         public Event OnRemove { get; set; }
 
         public Event OnTakeDamage { get; set; }
+
+        public Event OnDealDamage { get; set; }
 
         public Event OnAbilityCastStart { get; set; }
 

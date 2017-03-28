@@ -1,4 +1,5 @@
-﻿using MWCGClasses.GameObjects;
+﻿using MWCGClasses.Enums;
+using MWCGClasses.GameObjects;
 using MWCGClasses.InGame;
 
 namespace MWData
@@ -9,7 +10,7 @@ namespace MWData
         {
             foreach (Unit unit in obj.Owner.Field.Units)
             {
-                unit.TakeDamage(1, g);
+                unit.TakeDamage(g, 1, DamageType.Magical);
             }
         }
     }

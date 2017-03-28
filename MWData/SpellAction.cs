@@ -1,4 +1,5 @@
-﻿using MWCGClasses.GameObjects;
+﻿using MWCGClasses.Enums;
+using MWCGClasses.GameObjects;
 using MWCGClasses.InGame;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,7 +20,7 @@ namespace MWData
             }
             int targetId = g.Clients[obj.Owner.Num].CreateAction(MWCGClasses.ClientInterface.ActionType.FieldObjects,avtargets).Target;
             GameObject target = g.ObjectById(targetId);
-            target.TakeDamage(4,g);
+            target.TakeDamage(g, 4, DamageType.Magical);
         }
     }
 }
