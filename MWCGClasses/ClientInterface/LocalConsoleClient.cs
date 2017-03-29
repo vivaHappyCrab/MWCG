@@ -61,8 +61,9 @@ namespace MWCGClasses.ClientInterface
                 case ActionType.FieldObjects:
                     Console.WriteLine("You must {0}; Your actions:", message);
                     foreach (int target in targets)
-                        Console.Write("{1}({0});", target,
-                            this._game.Players[this._enemyNum].Field.Permanents.FirstOrDefault(obj => obj.Id == target)?.Name);
+                        Console.Write("{1}{2}({0});", target,
+                            this._game.Players[this._enemyNum].Field.Permanents.FirstOrDefault(obj => obj.Id == target)?.Name,
+                            this._game.Players[this._yourNum].Field.Permanents.FirstOrDefault(obj => obj.Id == target)?.Name);
                     Console.WriteLine();
 
                     while (true)
@@ -93,7 +94,7 @@ namespace MWCGClasses.ClientInterface
                     {
                         foreach (int target in targets)
                             Console.Write("{1}({0});", target,
-                                this._game.Players[this._yourNum].Field.Units.FirstOrDefault(unit => unit.Id == target)?.Name);
+                                this._game.Players[this._enemyNum].Field.Units.FirstOrDefault(unit => unit.Id == target)?.Name);
                         Console.WriteLine();
 
                         string s = Console.ReadLine();
