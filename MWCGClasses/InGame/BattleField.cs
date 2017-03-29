@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using MWCGClasses.GameObjects;
 
 namespace MWCGClasses.InGame
@@ -15,5 +16,7 @@ namespace MWCGClasses.InGame
         {
             this.Face = g.Factory.GetHeroByRace(heroid);
         }
+
+        public List<GameObject> Permanents => new List<GameObject>().Union(this.Units).Union(this.Supports).Union(new List<GameObject>() {this.Face}).ToList();
     }
 }

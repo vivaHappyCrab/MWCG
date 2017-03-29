@@ -14,6 +14,12 @@ namespace MWCGClasses.GameObjects
             this.MaxHealth = this.Health = hp;
         }
 
+        /// <summary>
+        /// Нанесение урона физической атакой и получение ответа.
+        /// </summary>
+        /// <param name="game">Игра, в которой находятся объекты.</param>
+        /// <param name="target">Цель-получатель урона.</param>
+        /// <param name="amount"></param>
         public void DealDamage(Game game, GameObject target,int amount)
         {
             if(game==null)
@@ -24,10 +30,15 @@ namespace MWCGClasses.GameObjects
 
             if (amount > this.Attack)
                 return;
-            if (amount==0)return;
 
             GameAction.OnObjectDealsDamage(game, this);
             target.TakeDamage(game,amount,DamageType.Physical);
+            Unit targetUnit=target as Unit;
+
+            if (targetUnit == null || targetUnit.Attack <= 0) return;
+
+            GameAction.OnObjectDealsDamage(game, targetUnit);
+            this.TakeDamage(game, targetUnit.Attack,DamageType.Physical);
         }
     }
 }

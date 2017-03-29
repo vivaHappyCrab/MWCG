@@ -199,7 +199,7 @@ namespace MWCGClasses.InGame
 
             List<Tuple<int, int>> defenders = this.DefendPhase(player, pairs);
 
-            List<Tuple<int, List<int>>> combatPairs = TargetList(pairs, defenders);
+            IEnumerable<Tuple<int, List<int>>> combatPairs = TargetList(pairs, defenders);
 
             //todo: Instant phase
 
@@ -347,7 +347,7 @@ namespace MWCGClasses.InGame
         /// <param name="attackers">Пары атакующий - цель.</param>
         /// <param name="defenders">Пары защитник - атакующий.</param>
         /// <returns>Пары атакующий - список его реальных целей.</returns>
-        private static List<Tuple<int, List<int>>> TargetList(IEnumerable<Tuple<int, int>> attackers, List<Tuple<int, int>> defenders)
+        private static IEnumerable<Tuple<int, List<int>>> TargetList(IEnumerable<Tuple<int, int>> attackers, List<Tuple<int, int>> defenders)
         {
             List<Tuple<int, List<int>>> result = new List<Tuple<int, List<int>>>();
             foreach (Tuple<int, int> item in attackers)
@@ -369,23 +369,33 @@ namespace MWCGClasses.InGame
         {
             foreach (Tuple<int, List<int>> pair in combatPairs)
             {
+                Unit unit = this._objects[pair.Item1] as Unit;
                 if (pair.Item2.Count < 2)
                 {
                     Unit attacker = (this._objects[pair.Item1] as Unit);
                     attacker?.DealDamage(this, this._objects[pair.Item2[0]], attacker.Attack);
-                    continue;
                 }
-                Unit unit = this._objects[pair.Item1] as Unit;
-                if (unit != null && unit.Attack >= pair.Item2.Select(x => this._objects[x].Health).Sum())
+                else if (unit != null && unit.Attack >= pair.Item2.Select(x => this._objects[x].Health).Sum())
                 {
                     foreach (int i in pair.Item2)
                     {
                         unit?.DealDamage(this, this._objects[pair.Item2[0]], this._objects[pair.Item2[0]].Health);
                     }
-                    //todo:Add original target for trmaple
-                    continue;
+                    //todo:Add original target for trample
                 }
-                //todo:Create action for chosing damages
+                else
+                {
+                    Answer ans = this.Clients[player.Num].CreateAction(ActionType.Sort, pair.Item2,pair.Item1.ToString());
+                    int totalDamage = unit?.Attack ?? 0;
+                    foreach (int target in ans.Targets)
+                    {
+                        GameObject tagetObject = this._objects[target];
+                        if (totalDamage <= 0) break;
+                        int damage = totalDamage > tagetObject.Health ? tagetObject.Health : totalDamage;
+                        unit?.DealDamage(this, tagetObject, damage);
+                        totalDamage -= damage;
+                    }
+                }
             }
         }
 

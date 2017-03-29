@@ -29,7 +29,7 @@ namespace MWCGClasses.Enums
         /// <summary>
         /// Attack with opponent and then one more time.
         /// </summary>
-        DoubleDamage=0x8,
+        DoubleDamage=0x8, //todo: убрать дд, придумать новую механику
 
         /// <summary>
         /// Don't used in attack phase.
@@ -77,10 +77,5 @@ namespace MWCGClasses.Enums
         /// Unit can only defend.
         /// </summary>
         Defender=0x30,
-
-        /// <summary>
-        /// Unit attacks first and then attacks together one more time.
-        /// </summary>
-        FirstDoubleDamage=0xc
     }
 }
