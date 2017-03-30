@@ -127,7 +127,15 @@ namespace MWCGClasses.GameObjects
         /// </summary>
         public string Description { get; set; }
 
+        /// <summary>
+        /// Признак возможности объекта сразу дейстовать(атаковать или кастовать способности)
+        /// </summary>
         public bool Activated { get; set; } = false;
+
+        /// <summary>
+        /// Ключевые слова карты(автоматически дополняются в описание).
+        /// </summary>
+        public Keywords Keys { get; set; }=Keywords.None;
 
         #endregion
     }

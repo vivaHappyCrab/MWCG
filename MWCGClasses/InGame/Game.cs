@@ -76,7 +76,7 @@ namespace MWCGClasses.InGame
 
             for (int i = 0; i < this.Players.Count; ++i)
             {
-                int count = (startHandSizes != null && i < startHandSizes.Length) ? startHandSizes[i] : DefaultHandSize;
+                int count = startHandSizes != null && i < startHandSizes.Length ? startHandSizes[i] : DefaultHandSize;
 
                 for (int j = 0; j < count; ++j)
                 {
@@ -173,7 +173,7 @@ namespace MWCGClasses.InGame
                 targets.Add(opp.Field.Face.Id);
             }
 
-            List<int> actors = player.Field.Units.Select(unit => unit.Id).ToList();
+            List<int> actors = player.Field.Units.Where(unit=>unit.Activated).Select(unit => unit.Id).ToList();
 
             List<Tuple<int, int>> pairs = new List<Tuple<int, int>>();
 
@@ -187,6 +187,7 @@ namespace MWCGClasses.InGame
                     case ActionType.Attack:
                         pairs.Add(ans.Pair);
                         actors.Remove(ans.Pair.Item1);
+                        this._objects[ans.Pair.Item1].Activated = false;
                         if (!actors.Any())
                             endPhase = false;
                         break;
@@ -295,6 +296,8 @@ namespace MWCGClasses.InGame
                     this.Players[owner].Field.Supports.Add(perm as Support);
                     break;
             }
+            if ((perm.Keys & Keywords.Haste) > 0)
+                perm.Activated = true;
         }
 
         /// <summary>
@@ -372,14 +375,14 @@ namespace MWCGClasses.InGame
                 Unit unit = this._objects[pair.Item1] as Unit;
                 if (pair.Item2.Count < 2)
                 {
-                    Unit attacker = (this._objects[pair.Item1] as Unit);
+                    Unit attacker = this._objects[pair.Item1] as Unit;
                     attacker?.DealDamage(this, this._objects[pair.Item2[0]], attacker.Attack);
                 }
-                else if (unit != null && unit.Attack >= pair.Item2.Select(x => this._objects[x].Health).Sum())
+                else if (unit != null && unit.Attack >= pair.Item2.Select(x => this._objects[x].Health).Sum()) //just faster then next else
                 {
                     foreach (int i in pair.Item2)
                     {
-                        unit?.DealDamage(this, this._objects[pair.Item2[0]], this._objects[pair.Item2[0]].Health);
+                        unit.DealDamage(this, this._objects[i], this._objects[i].Health);
                     }
                     //todo:Add original target for trample
                 }
@@ -390,7 +393,6 @@ namespace MWCGClasses.InGame
                     foreach (int target in ans.Targets)
                     {
                         GameObject tagetObject = this._objects[target];
-                        if (totalDamage <= 0) break;
                         int damage = totalDamage > tagetObject.Health ? tagetObject.Health : totalDamage;
                         unit?.DealDamage(this, tagetObject, damage);
                         totalDamage -= damage;

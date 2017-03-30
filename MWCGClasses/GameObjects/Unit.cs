@@ -19,7 +19,7 @@ namespace MWCGClasses.GameObjects
         /// </summary>
         /// <param name="game">Игра, в которой находятся объекты.</param>
         /// <param name="target">Цель-получатель урона.</param>
-        /// <param name="amount"></param>
+        /// <param name="amount">Кол-во наносимого урона.</param>
         public void DealDamage(Game game, GameObject target,int amount)
         {
             if(game==null)
@@ -31,10 +31,13 @@ namespace MWCGClasses.GameObjects
             if (amount > this.Attack)
                 return;
 
-            GameAction.OnObjectDealsDamage(game, this);
-            target.TakeDamage(game,amount,DamageType.Physical);
-            Unit targetUnit=target as Unit;
+            if (amount > 0)
+            {
+                GameAction.OnObjectDealsDamage(game, this);
+                target.TakeDamage(game, amount, DamageType.Physical);
+            }
 
+            Unit targetUnit=target as Unit;
             if (targetUnit == null || targetUnit.Attack <= 0) return;
 
             GameAction.OnObjectDealsDamage(game, targetUnit);

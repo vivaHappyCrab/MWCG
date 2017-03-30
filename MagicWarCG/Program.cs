@@ -22,13 +22,13 @@ namespace MagicWarCG
             deck1.AddCards(1, 4);
             deck1.AddCards(5, 2);
             deck1.AddCards(6, 2);
-            deck1.AddCards(7, 1);
-            deck1.AddCards(9, 1);
+            deck1.AddCards(7);
+            deck1.AddCards(9);
 
             PlayerDeck deck2 = new PlayerDeck();
             deck2.AddCards(1, 2);
             deck2.AddCards(5, 3);
-            deck2.AddCards(6, 1);
+            deck2.AddCards(6);
             deck2.AddCards(7, 2);
             deck2.AddCards(9, 2);
 

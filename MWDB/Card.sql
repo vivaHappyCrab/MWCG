@@ -1,6 +1,6 @@
 ﻿CREATE TABLE [dbo].[Card]
 (
-	[Id] INT NOT NULL PRIMARY KEY IDENTITY, 
+	[Id] INT NOT NULL PRIMARY KEY, 
     [Name] NVARCHAR(50) NOT NULL, 
     [Description] NVARCHAR(255) NOT NULL, 
     [ManaCost] INT NOT NULL, 
