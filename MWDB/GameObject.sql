@@ -9,5 +9,6 @@
     [Name] NVARCHAR(50) NOT NULL, 
     [Description] NVARCHAR(255) NULL, 
     [type] INT NOT NULL DEFAULT 0, 
-    [Keyword] INT NOT NULL DEFAULT 0 
+    [Keyword] INT NOT NULL DEFAULT 0, 
+    [EnterBattle] INT NULL DEFAULT NULL 
 )

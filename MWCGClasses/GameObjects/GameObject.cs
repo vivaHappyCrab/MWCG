@@ -1,4 +1,5 @@
-﻿using MWCGClasses.InGame;
+﻿using System.Collections.Generic;
+using MWCGClasses.InGame;
 using MWCGClasses.Enums;
 
 namespace MWCGClasses.GameObjects
@@ -137,6 +138,10 @@ namespace MWCGClasses.GameObjects
         /// </summary>
         public Keywords Keys { get; set; }=Keywords.None;
 
+        /// <summary>
+        /// Активируемые способности.
+        /// </summary>
+        public List<Ability> Abilities { get; set; } 
         #endregion
     }
 }

@@ -47,6 +47,7 @@ namespace MWCGClasses
                         Event ev = game.Factory.GetEventById(spell.Effect);
                         ev.Invoke(game, spell);
                         OnSpellCompletedCast(game, spell);
+                        spell.Owner.Graves.Graves.Add(spell);
                         break;
                     }
             }

@@ -113,6 +113,10 @@ namespace MWCGClasses.InGame
 
                 GameAction.OnTurnStart(this, player);
                 this.DrawCards(player);
+                foreach (GameObject gameObject in player.Field.Permanents)
+                {
+                    gameObject.Activated = true;
+                }
 
                 this.MainPhase(player);
                 this.AttackPhase(player);
@@ -141,7 +145,7 @@ namespace MWCGClasses.InGame
             while (endPhase)
             {
                 List<int> targets = player.Hand.Select(card => card.Id).ToList();
-                if (!targets.Any()) return;
+                //if (!targets.Any()) return; don't return - opp should not know there r no possibilities
 
                 Answer ans = this.Clients[player.Num].CreateAction(ActionType.HandCard, targets, "choose card to play");
                 switch (ans.ActionType)
