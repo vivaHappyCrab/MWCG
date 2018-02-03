@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using MWCGClasses;
 using MWCGClasses.GameObjects;
@@ -82,11 +83,17 @@ namespace MWData
             this._objectsLibrary = DataAccessor.GetObjectList();
             this._raceLibrary = DataAccessor.GetRaceList();
             this._eventMap = InitEvents();
+
+            foreach (Tuple<int, int?> pair in DataAccessor.GetEventList())
+            {
+                if (pair.Item2.HasValue)
+                    this._objectsLibrary.First(o=>o.ObjectNum==pair.Item1).OnSummon = this._eventMap[pair.Item2.Value];
+            }
         }
 
         private static List<Event> InitEvents()
         {
-            List<Event> result = new List<Event> { SpellAction.FireBall, EnterBf.YouthBerserkBc };
+            List<Event> result = new List<Event> { SpellAction.FireBall, EnterAction.YouthBerserk };
             return result;
         }
     }

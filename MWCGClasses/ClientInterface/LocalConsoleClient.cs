@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using MWCGClasses.GameObjects;
 using MWCGClasses.InGame;
@@ -220,7 +221,7 @@ namespace MWCGClasses.ClientInterface
             }
             Console.WriteLine();
             #endregion
-
+            Console.WriteLine("--------------------------------------------------------------");
             #region Draw self
             Player self = this._game.Players[this._yourNum];
 
@@ -243,6 +244,7 @@ namespace MWCGClasses.ClientInterface
                                                                                                         self.Field.Face.Arts[1]?.Name, self.Field.Face.Arts[1]?.Id,
                                                                                                         self.Field.Face.Arts[2]?.Name, self.Mana, self.MaxMana);
             Console.WriteLine("You: ID={0}; Health={1}; Hand:{2};", self.Field.Face.Id, self.Field.Face.Health, self.Hand.Count);
+
             #endregion
         }
 

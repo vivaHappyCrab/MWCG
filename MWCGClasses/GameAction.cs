@@ -24,8 +24,9 @@ namespace MWCGClasses
             if (!game.Players[card.Owner].Hand.Contains(card))
                 return;
 
-            game.Players[card.Owner].Mana -= card.ManaCost;
-            game.Players[card.Owner].Hand.Remove(card);
+            Player thisPlayer= game.Players[card.Owner];
+            thisPlayer.Mana -= card.ManaCost;
+            thisPlayer.Hand.Remove(card);
 
             switch (card.Type)
             {
@@ -33,15 +34,15 @@ namespace MWCGClasses
                     {
                         //CreateAction(opponent,PlayAnswer);
                         GameObject perm = game.CreateObject(card.EntityId);
+                        perm.Owner = thisPlayer;
                         perm.OnSummon?.Invoke(game, perm);
-                        OnObjectEnter(game, perm);
                         game.AddToBattleField(perm, card.Owner);
                         break;
                     }
                 case CardType.Spell:
                     {
                         //CreateAction(opponent,PlayAnswer);
-                        Spell spell = game.Factory.GetObjectToPlayer(card.EntityId, game.Players[card.Owner]) as Spell;
+                        Spell spell = game.Factory.GetObjectToPlayer(card.EntityId, thisPlayer) as Spell;
                         OnSpellStartedCast(game, spell);
                         if (spell == null) return;
                         Event ev = game.Factory.GetEventById(spell.Effect);

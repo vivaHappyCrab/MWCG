@@ -27,9 +27,9 @@ namespace MWCGClasses.Enums
         FirstStrike=0x4,
 
         /// <summary>
-        /// Attack with opponent and then one more time.
+        /// Can be killed only when damage more then max helath of unit.
         /// </summary>
-        DoubleDamage=0x8, //todo: убрать дд, придумать новую механику
+        Supreme=0x8,
 
         /// <summary>
         /// Don't used in attack phase.

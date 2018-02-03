@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using MWCGClasses;
 using MWCGClasses.GameObjects;
 using System.Data.SqlClient;
@@ -97,11 +98,6 @@ namespace MWData
                                 o = new Artifact((int)res["BackCard"], (int)res["ObjectNum"], res["Name"].ToString(), res["Description"].ToString(), (ArtType)res["Default"], (int)res["Health"]);
                                 break;
                             }
-                        case ObjectType.Ability:
-                            {
-                                o = new Ability((int)res["BackCard"], (int)res["ObjectNum"], (int)res["Default"], (int)res["Cost"], (bool)res["Attack"], res["Name"].ToString(), res["Description"].ToString());
-                                break;
-                            }
                         default: { o = null;break; }
                     }
                     result.Add(o);
@@ -147,11 +143,6 @@ namespace MWData
                                 o = new Artifact((int)res["BackCard"], (int)res["ObjectNum"], res["Name"].ToString(), res["Description"].ToString(), (ArtType)res["Default"], (int)res["Health"]);
                                 break;
                             }
-                        case ObjectType.Ability:
-                            {
-                                o = new Ability((int)res["BackCard"], (int)res["ObjectNum"], (int)res["Default"], (int)res["Cost"], (bool)res["Attack"], res["Name"].ToString(), res["Description"].ToString());
-                                break;
-                            }
                         default: { o = null; break; }
                     }
                 cn.Dispose();
@@ -191,6 +182,23 @@ namespace MWData
                         HeroId = (int) res["HeroId"]
                     };
                     result.Add(race);
+                }
+                cn.Dispose();
+            }
+            return result;
+        }
+        public static List<Tuple<int,int?>> GetEventList()
+        {
+            List<Tuple<int, int?>> result = new List<Tuple<int, int?>>();
+            using (SqlConnection cn = new SqlConnection(Connector))
+            {
+                cn.Open();
+                SqlCommand cmd = new SqlCommand("dbo.getEventList", cn) { CommandType = CommandType.StoredProcedure };
+                SqlDataReader res = cmd.ExecuteReader();
+                while (res.Read())
+                {
+                    int? enter = res["EnterEvent"] == DBNull.Value ? null : (int?) res["EnterEvent"];
+                    result.Add(new Tuple<int, int?>((int)res["Id"],enter));
                 }
                 cn.Dispose();
             }

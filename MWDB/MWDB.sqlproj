@@ -59,14 +59,17 @@
   <Import Condition="'$(SQLDBExtensionsRefPath)' == ''" Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets" />
   <ItemGroup>
     <Folder Include="Properties" />
+    <Folder Include="Tables" />
+    <Folder Include="Stored Procedures" />
   </ItemGroup>
   <ItemGroup>
-    <Build Include="Card.sql" />
-    <Build Include="getCard.sql" />
-    <Build Include="Races.sql" />
-    <Build Include="CardsRace.sql" />
-    <Build Include="GameObject.sql" />
-    <Build Include="getGameObject.sql" />
+    <Build Include="Tables\Card.sql" />
+    <Build Include="Tables\CardsRace.sql" />
+    <Build Include="Tables\GameObject.sql" />
+    <Build Include="Tables\Races.sql" />
+    <Build Include="Stored Procedures\getCard.sql" />
+    <Build Include="Stored Procedures\getGameObject.sql" />
+    <Build Include="Stored Procedures\getEventList.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="MWDB.publish.xml" />

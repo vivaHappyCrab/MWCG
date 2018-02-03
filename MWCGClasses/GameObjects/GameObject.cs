@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Reflection;
 using MWCGClasses.InGame;
 using MWCGClasses.Enums;
 
@@ -27,11 +28,19 @@ namespace MWCGClasses.GameObjects
 
         public virtual void TakeDamage(Game g, int dmg, DamageType type)
         {
-            if (dmg > 0)
-            {
-                this.Health = this.Health - dmg;
-                g.ObjectTakesDamage(this);
-            }
+            //Check if dmg is correct and can be applied
+            if ((this.Keys & Keywords.SpellImmune) != 0 && type == DamageType.Magical)
+                return;
+            if ((this.Keys & Keywords.Protected) != 0 && type == DamageType.Physical)
+                return;
+            if ((this.Keys & Keywords.Supreme) != 0 && dmg < this.MaxHealth)
+                return;
+            if (dmg <= 0)
+                return;
+
+            this.Health = this.Health - dmg;
+            g.ObjectTakesDamage(this);
+
             if (this.Health <= 0)
                 g.KillObject(this);
 
@@ -53,19 +62,32 @@ namespace MWCGClasses.GameObjects
         /// Вызвается при смерти другого объекта.
         /// </summary>
         public Event OnPermDeath { get; set; }
-        
+
         /// <summary>
         /// Вызывается при смерти самого объекта.
         /// </summary>
         public Event OnDeath { get; set; }
 
+        /// <summary>
+        /// Вызывается при покидании поля другим обЪектом
+        /// </summary>
         public Event OnRemove { get; set; }
 
+        /// <summary>
+        /// Вызывается при получении урона.
+        /// </summary>
         public Event OnTakeDamage { get; set; }
 
+        /// <summary>
+        /// Вызывается при нанесении урона.
+        /// </summary>
         public Event OnDealDamage { get; set; }
 
+        /// <summary>
+        /// Вызывается при касте способности другим объектом.
+        /// </summary>
         public Event OnAbilityCastStart { get; set; }
+
 
         public Event OnAbilityCastCompleted { get; set; }
 
@@ -136,12 +158,12 @@ namespace MWCGClasses.GameObjects
         /// <summary>
         /// Ключевые слова карты(автоматически дополняются в описание).
         /// </summary>
-        public Keywords Keys { get; set; }=Keywords.None;
+        public Keywords Keys { get; set; } = Keywords.None;
 
         /// <summary>
         /// Активируемые способности.
         /// </summary>
-        public List<Ability> Abilities { get; set; } 
+        public List<Ability> Abilities { get; set; }
         #endregion
     }
 }

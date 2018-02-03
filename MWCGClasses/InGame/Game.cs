@@ -105,6 +105,7 @@ namespace MWCGClasses.InGame
 
         public void GameCycle(Player player, int turn)
         {
+            this._turnCount = turn;
             while (true)//todo: Win-Lose condition
             {
                 if (player.MaxMana < 12)
@@ -278,7 +279,9 @@ namespace MWCGClasses.InGame
         /// <param name="gameObject">Объект, принимающий урон</param>
         public void ObjectTakesDamage(GameObject gameObject)
         {
-            //todo
+            GameAction.OnObjectTakesDamage(this,gameObject);
+            if (CheckVictory())
+                EndGame();
         }
 
         /// <summary>
@@ -288,7 +291,6 @@ namespace MWCGClasses.InGame
         /// <param name="owner">Владелец объекта</param>
         public void AddToBattleField(GameObject perm, int owner)
         {
-            perm.Owner = this.Players[owner];
             GameAction.OnObjectEnter(this, perm);
             switch (perm.OType)
             {
@@ -403,6 +405,16 @@ namespace MWCGClasses.InGame
                     }
                 }
             }
+        }
+
+        private bool CheckVictory()
+        {
+            return false;
+        }
+
+        private void EndGame()
+        {
+            
         }
 
         #endregion

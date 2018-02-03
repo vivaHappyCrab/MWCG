@@ -6,7 +6,6 @@ namespace MWCGClasses.GameObjects
 {
     public class Unit : GameObject
     {
-        public int Attack { get; set; }
         public Unit(int cardback, int id, string name, string desc, int attack, int hp) : 
             base(cardback, id, ObjectType.Creature, name, desc)
         {
@@ -43,5 +42,14 @@ namespace MWCGClasses.GameObjects
             GameAction.OnObjectDealsDamage(game, targetUnit);
             this.TakeDamage(game, targetUnit.Attack,DamageType.Physical);
         }
+
+        #region Properties
+        
+        /// <summary>
+        /// Атака юнита.
+        /// </summary>
+        public int Attack { get; set; }
+
+        #endregion
     }
 }

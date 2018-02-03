@@ -20,17 +20,17 @@ namespace MagicWarCG
 
             PlayerDeck deck1 = new PlayerDeck();
             deck1.AddCards(1, 4);
-            deck1.AddCards(5, 2);
-            deck1.AddCards(6, 2);
-            deck1.AddCards(7);
-            deck1.AddCards(9);
+            deck1.AddCards(3, 2);
+            deck1.AddCards(4, 2);
+            deck1.AddCards(5);
+            deck1.AddCards(6);
 
             PlayerDeck deck2 = new PlayerDeck();
             deck2.AddCards(1, 2);
-            deck2.AddCards(5, 3);
-            deck2.AddCards(6);
-            deck2.AddCards(7, 2);
-            deck2.AddCards(9, 2);
+            deck2.AddCards(3, 3);
+            deck2.AddCards(4);
+            deck2.AddCards(5, 2);
+            deck2.AddCards(6, 2);
 
             #endregion
 

@@ -7,8 +7,8 @@ using System.Linq;
 
 namespace MWData
 {
-    public class SpellAction
-    {
+    public static class SpellAction
+    {  
         public static void FireBall(Game g, GameObject obj)
         {
             List<int> avtargets = new List<int>();

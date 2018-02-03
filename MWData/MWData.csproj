@@ -41,7 +41,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataAccessor.cs" />
-    <Compile Include="EnterBF.cs" />
+    <Compile Include="EnterAction.cs" />
     <Compile Include="Factory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SpellAction.cs" />
