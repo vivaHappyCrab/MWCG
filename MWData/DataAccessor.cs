@@ -8,14 +8,14 @@ using MWCGClasses.Enums;
 
 namespace MWData
 {
-    public class DataAccessor
+    public class DataAccessor : IDataAccessor
     {
-        public static string Connector = @"Server=CRAB\SQLDB; DataBase=MagicWar;Integrated Security=SSPI; ";
+        public string Connector = @"Server=CRAB\SQLDB; DataBase=MagicWar;Integrated Security=SSPI; ";
 
-        public static Card GetCard(int id)
+        public Card GetCard(int id)
         {
             Card card = new Card();
-            using (SqlConnection cn=new SqlConnection(Connector))
+            using (SqlConnection cn=new SqlConnection(this.Connector))
             {
                 cn.Open();
                 SqlCommand cmd = new SqlCommand("dbo.getCard", cn) {CommandType = CommandType.StoredProcedure};
@@ -30,14 +30,13 @@ namespace MWData
                 card.Name=(string)res["Name"];
                 card.Rarity=(RareType)res["Rarity"];
                 card.Type=(CardType)res["Type"];
-                cn.Dispose();
             }
             return card;
         }
-        public static List<Card> GetCardList()
+        public List<Card> GetCardList()
         {
             List<Card> result = new List<Card>();
-            using (SqlConnection cn = new SqlConnection(Connector))
+            using (SqlConnection cn = new SqlConnection(this.Connector))
             {
                 cn.Open();
                 SqlCommand cmd = new SqlCommand("dbo.getCard", cn) {CommandType = CommandType.StoredProcedure};
@@ -61,10 +60,10 @@ namespace MWData
             }
             return result;
         }
-        public static List<GameObject> GetObjectList()
+        public List<GameObject> GetObjectList()
         {
             List<GameObject> result = new List<GameObject>();
-            using (SqlConnection cn = new SqlConnection(Connector))
+            using (SqlConnection cn = new SqlConnection(this.Connector))
             {
                 cn.Open();
                 SqlCommand cmd = new SqlCommand("dbo.getGameObject", cn) {CommandType = CommandType.StoredProcedure};
@@ -106,10 +105,10 @@ namespace MWData
             }
             return result;
         }
-        public static GameObject GetObject(int id)
+        public GameObject GetObject(int id)
         {
             GameObject o;
-            using (SqlConnection cn = new SqlConnection(Connector))
+            using (SqlConnection cn = new SqlConnection(this.Connector))
             {
                 cn.Open();
                 SqlCommand cmd = new SqlCommand("dbo.getGameObject", cn) {CommandType = CommandType.StoredProcedure};
@@ -149,10 +148,10 @@ namespace MWData
             }
             return o;
         }
-        public static Race GetRace(int id)
+        public Race GetRace(int id)
         {
             Race race = new Race();
-            using (SqlConnection cn = new SqlConnection(Connector))
+            using (SqlConnection cn = new SqlConnection(this.Connector))
             {
                 cn.Open();
                 SqlCommand cmd = new SqlCommand("dbo.getRace", cn) {CommandType = CommandType.StoredProcedure};
@@ -165,10 +164,10 @@ namespace MWData
             }
             return race;
         }
-        public static List<Race> GetRaceList()
+        public List<Race> GetRaceList()
         {
             List<Race> result = new List<Race>();
-            using (SqlConnection cn = new SqlConnection(Connector))
+            using (SqlConnection cn = new SqlConnection(this.Connector))
             {
                 cn.Open();
                 SqlCommand cmd = new SqlCommand("dbo.getRace", cn) {CommandType = CommandType.StoredProcedure};
@@ -187,18 +186,18 @@ namespace MWData
             }
             return result;
         }
-        public static List<Tuple<int,int?>> GetEventList()
+        public List<Tuple<int,int>> GetEventList()
         {
-            List<Tuple<int, int?>> result = new List<Tuple<int, int?>>();
-            using (SqlConnection cn = new SqlConnection(Connector))
+            List<Tuple<int, int>> result = new List<Tuple<int, int>>();
+            using (SqlConnection cn = new SqlConnection(this.Connector))
             {
                 cn.Open();
                 SqlCommand cmd = new SqlCommand("dbo.getEventList", cn) { CommandType = CommandType.StoredProcedure };
                 SqlDataReader res = cmd.ExecuteReader();
                 while (res.Read())
                 {
-                    int? enter = res["EnterEvent"] == DBNull.Value ? null : (int?) res["EnterEvent"];
-                    result.Add(new Tuple<int, int?>((int)res["Id"],enter));
+                    int enter = (int)res["EnterEvent"];
+                    result.Add(new Tuple<int, int>((int)res["Id"],enter));
                 }
                 cn.Dispose();
             }

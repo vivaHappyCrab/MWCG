@@ -16,6 +16,15 @@ namespace MWData
         private int _objId = 1;
         private List<Race> _raceLibrary;
 
+        private readonly IDataAccessor _dataAccessor;
+
+        public Factory(IDataAccessor dataAccessor)
+        {
+            if(dataAccessor==null)
+                throw new ArgumentNullException(nameof(dataAccessor));
+            this._dataAccessor = dataAccessor;
+        }
+
         public GameObject GetObjectById(int id)
         {
             if (id <= 0) return null;
@@ -26,14 +35,7 @@ namespace MWData
             return o;
         }
 
-        public Hero GetHeroByRace(int id)
-        {
-            Hero h = this.GetObjectById(this._raceLibrary.First(x => x.RaceId == id).HeroId) as Hero;
-
-            if (h == null) return null;
-            h.Id = this._objId++;
-            return h;
-        }
+        public Hero GetHeroByRace(int id) => this.GetObjectById(this._raceLibrary.First(x => x.RaceId == id).HeroId) as Hero;
 
         public Event GetEventById(int effect)
         {
@@ -79,15 +81,13 @@ namespace MWData
 
         public void InitLibs()
         {
-            this._cardLibrary = DataAccessor.GetCardList();
-            this._objectsLibrary = DataAccessor.GetObjectList();
-            this._raceLibrary = DataAccessor.GetRaceList();
+            this._cardLibrary = this._dataAccessor.GetCardList();
+            this._objectsLibrary = this._dataAccessor.GetObjectList();
+            this._raceLibrary = this._dataAccessor.GetRaceList();
             this._eventMap = InitEvents();
 
-            foreach (Tuple<int, int?> pair in DataAccessor.GetEventList())
-            {
-                if (pair.Item2.HasValue)
-                    this._objectsLibrary.First(o=>o.ObjectNum==pair.Item1).OnSummon = this._eventMap[pair.Item2.Value];
+            foreach (Tuple<int, int> pair in this._dataAccessor.GetEventList()) {
+                this._objectsLibrary.First(o=>o.ObjectNum==pair.Item1).OnSummon = this._eventMap[pair.Item2];
             }
         }
 

@@ -280,8 +280,8 @@ namespace MWCGClasses.InGame
         public void ObjectTakesDamage(GameObject gameObject)
         {
             GameAction.OnObjectTakesDamage(this,gameObject);
-            if (CheckVictory())
-                EndGame();
+            if (this.CheckVictory())
+                this.EndGame();
         }
 
         /// <summary>

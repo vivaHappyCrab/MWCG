@@ -10,7 +10,7 @@ namespace MagicWarCG
     {
         private static void Main(string[] args)
         {
-            Factory f = new Factory();
+            Factory f = new Factory(new LocalAccessor());
             f.InitLibs();
 
             if (args.Length != 0)
